@@ -1,1 +1,1 @@
-# propert-finder
+# property-finder

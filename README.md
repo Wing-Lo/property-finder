@@ -1,6 +1,53 @@
 # Property Finder
 
-## R1 @Sam
+## R1 
+
+### Purpose
+
+In today's real estate market, finding the perfect property can be an overwhelming and time-consuming task for potential buyers and renters alike. The abundance of properties combined with the cluttered and often overly complex features of many existing platforms only adds to the frustration. Users are frequently bombarded with irrelevant options and excessive details, which obscure the information they actually need, making the search process more challenging than it should be.
+
+Our real estate app seeks to transform this experience by providing a streamlined, user-friendly platform designed specifically to cut through the noise. With a focus on simplicity and efficiency, our app allows users to easily search for, view, and book property listings, removing the obstacles that typically stand in the way of a smooth property search. By prioritizing the most essential features and presenting them in a clear, accessible format, our app ensures that users can quickly and effectively navigate the property market, leading them to their ideal property with minimal hassle.
+
+### Functionality & Features
+
+#### Visitors
+
+- Can browse the landing page to understand the app's purpose and benefits.
+- Can search and view basic property listings, including essential details like price, location, and property type.
+- Have the option to sign up to become registered users.
+
+#### Registered Users
+
+- Secure sign-up & sign-in with user authentication.
+- Can create and manage property listings if they are property owners or agents.
+- Can book viewings for properties they are interested in.
+
+#### Administrators
+
+- Manage user roles with role-based access control (RBAC).
+- Can monitor and moderate content, including property listings and user accounts.
+
+#### Target Audience
+
+This app is aimed at potential property buyers, renters, real estate agents, and property owners who are looking for a simple, efficient platform to list, search, and book properties. It is designed for users who value a straightforward experience without the complexities of advanced features, making it ideal for those who want to find or list properties quickly and easily.
+
+### Tech Stack: MERN + Additional Technologies
+
+To build this real estate platform, the MERN stack will be used, providing a robust and scalable solution:
+
+- **MongoDB:** A NoSQL database that will store all user information, property listings, bookings, and other data. MongoDB’s flexible schema will allow for easy scalability and management of complex data structures.
+- **Express.js:** A web application framework for Node.js, Express.js will handle the server-side logic, routing, and API creation, providing a solid foundation for the backend of the application.
+- **React.js:** The frontend of the application will be built using React.js, offering a dynamic and responsive user interface. React’s component-based architecture will ensure a seamless user experience with fast rendering and easy maintenance.
+- **Node.js:** As the runtime environment, Node.js will allow for the development of a fast and efficient server-side application. It will handle all the backend operations, including the integration with MongoDB and communication with the frontend.
+
+### Other Technologies Used
+
+- **HTML & CSS:** For structuring and styling the frontend of the application, ensuring it is both visually appealing and user-friendly.
+- **Netlify:** Used for deploying the frontend of the application, providing continuous deployment and serverless backend services.
+- **Render:** Utilized for deploying the backend of the application, offering an easy-to-use cloud platform that supports modern web applications.
+- **Figma:** A design tool used for creating UI/UX designs and wireframes, ensuring a coherent and attractive user interface.
+- **Git:** A version control system that allows for efficient collaboration and tracking of changes throughout the development process.
+
 
 ## R2 @Rory
 
@@ -52,8 +99,6 @@ Granular, discrete interactions to complete the tasks above:
     o Cancel or reschedule bookings.
 
 ### User Story Table
-
-# User Story Table
 
 | Version 1: Initial release feature. | Version 2: Second iteration feature. | Version 3: Later iteration feature. |
 |-------------------------------------|--------------------------------------|--------------------------------------|

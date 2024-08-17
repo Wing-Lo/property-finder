@@ -1,6 +1,6 @@
 # Property Finder
 
-## R1 
+## R1. Description of the website
 
 ### Purpose
 
@@ -49,11 +49,84 @@ To build this real estate platform, the MERN stack will be used, providing a rob
 - **Git:** A version control system that allows for efficient collaboration and tracking of changes throughout the development process.
 
 
-## R2 @Rory
+## R2. Dataflow Diagram
 
-## R3 @ Rory
+The diagrams below illustrate the data flow within a real estate platform through different levels of detail.
 
-## R4 
+### **Context Diagram (Level 0)**
+   - **Overview:** This is the highest-level view of the system, showing the primary entities that interact with the Real Estate Platform.
+   - **Entities:**
+     - **User:** An individual who interacts with the platform, typically searching for properties.
+     - **Agent:** A real estate agent who lists properties on the platform.
+   - **Interactions:**
+     - **User Authentication:** The process of verifying the user's identity.
+     - **Property Search:** The user searches for properties listed on the platform.
+     - **Property Listing:** Agents upload property details to the platform.
+
+![Dataflow Diagram Level 0](/docs/dataflow-diagram/level-0.png)
+
+### **Decomposition Diagram (Level 1)**
+   - **Overview:** This diagram breaks down the high-level processes into more detailed sub-processes within the system.
+   - **Sub-Processes:**
+     - **User Authentication:** Handles user login, ensuring access is granted only to registered users. It interacts with User Data to validate credentials.
+     - **Property Management:** The process by which agents add, edit, or remove property listings. This process interacts with the Property Data storage to manage listings.
+     - **Property Search:** Allows users to query the platform for properties based on their search criteria. It retrieves data from the Property Data storage to return results.
+
+![Dataflow Diagram Level 1](/docs/dataflow-diagram/level-1.png)
+
+### **Detailed Process Diagram (Level 2)**
+   - **Overview:** This diagram delves even deeper into the specific processes and interactions between components.
+   - **Key Components:**
+     - **Registration & Login:** The initial step where the user provides credentials, which are verified against stored data.
+     - **User Authentication:** Once credentials are verified, the user is authenticated, and profile data is managed.
+     - **Manager User Profiles:** Handles updates and management of user profiles, interacting with User Data for storing and retrieving information.
+     - **Property Management:** Includes more granular actions like adding, editing, or removing properties by agents.
+     - **Search Properties:** Users send search criteria, which the platform processes to return relevant properties from the Property Data storage.
+     - **View Property Details:** After retrieving search results, users can view specific details of a property.
+
+![Dataflow Diagram Level 2](/docs/dataflow-diagram/level-2.png)
+
+Each level of the diagram adds more detail to the processes within the Real Estate Platform, from a broad overview in Level 0 to specific interactions and data flows in Level 2.
+
+## R3. Application Architecture Diagram
+
+The application architecture diagram below appears to represent a three-layered architecture typically used in software applications.
+
+![Application Architecture Diagram](/docs/application-architecture-diagram/1.png)
+
+### 1. Presentation Layer
+- **Description**: This is the topmost layer of the architecture, which handles the interaction between the user and the application.
+- **Components**:
+  - **User, Agent, Admin**: These represent different types of users or roles that interact with the system. They could have different levels of access and functionalities.
+  - **Web UI (User Interface)**: The interface that users interact with, typically through a web browser. The Web UI sends requests to the application layer and receives responses.
+
+### 2. Application Layer
+- **Description**: This middle layer contains the business logic of the application. It processes the requests from the presentation layer, interacts with the data layer, and sends the appropriate responses back.
+- **Components**:
+  - **User Authentication Service**: This service handles user login, authentication, and authorization by validating user credentials against stored data.
+  - **Property Management Service**: Manages property-related information, likely handling CRUD (Create, Read, Update, Delete) operations for property records.
+  - **Property Search Service**: Allows users to search for properties based on various criteria, sending queries to the data layer and returning results to the presentation layer.
+- **Process**:
+  - Requests from the Web UI are sent to these services, which then process the requests by interacting with the data layer.
+
+### 3. Data Layer
+- **Description**: This is the bottommost layer, responsible for data storage and retrieval.
+- **Components**:
+  - **User Data Store**: A database or data storage system that holds user credentials and authentication data.
+  - **Property Data Store**: Stores property details, which could include information like property descriptions, locations, prices, etc.
+- **Process**:
+  - The application layer services interact with the data stores to retrieve, update, or store data. The retrieved data is then sent back to the application layer, which formats it for the Web UI.
+
+### Overall Workflow:
+1. A user (User, Agent, Admin) interacts with the Web UI.
+2. The Web UI sends a **Request** to one of the services in the Application Layer.
+3. The service processes the request, possibly interacting with the Data Layer to retrieve or store data.
+4. The processed data is sent back to the Web UI as a **Response**.
+5. The Web UI displays the response to the user.
+
+This architecture ensures a clear separation of concerns, making the application more modular, scalable, and easier to maintain.
+
+## R4. User Stories
 
 ### Main User Story:
 As a potential homebuyer or renter, I want to efficiently search for properties, view detailed listings, and book appointments to find and secure my ideal home quickly and easily.
@@ -117,7 +190,7 @@ Granular, discrete interactions to complete the tasks above:
 
 
 
-## R5. Wireframes
+## R5. Wireframes for multiple standard screen sizes
 
 ### Desktop: Home
 
@@ -257,7 +330,7 @@ Granular, discrete interactions to complete the tasks above:
 
 ![Mobile New Listing](/docs/wireframe/mobile/new-listing.png)
 
-## R6. Trello
+## R6. Screenshots of Our Trello Board
 
 ##### 12/8/2024
 
@@ -274,3 +347,11 @@ Granular, discrete interactions to complete the tasks above:
 ##### 15/8/2024
 
 ![Trello 20240815](/docs/trello/20240815.png)
+
+##### 16/8/2024
+
+![Trello 20240815](/docs/trello/20240816.png)
+
+##### 17/8/2024
+
+![Trello 20240815](/docs/trello/20240817.png)

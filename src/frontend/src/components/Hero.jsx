@@ -10,7 +10,7 @@ const Hero = ({
     return (
         <section className="hero is-medium">
             <div className="hero-body">
-                <p className="title">{title}</p>
+                <p className="title mb-4">{title}</p>
                 <p className="subtitle">{subtitle}</p>
                 <button
                     onClick={() => navigate("/buy")}

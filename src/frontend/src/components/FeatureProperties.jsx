@@ -120,8 +120,8 @@ const FeatureProperties = ({ isHome = false, sellOrRent }) => {
         : "Feature Properties";
 
     return (
-        <section className="section is-medium has-background-white">
-            <h3 className="title is-3 has-text-primary">
+        <section className="section has-background-white">
+            <h3 className="title is-3 has-text-primary has-text-centered">
                 {featurePropertyTitle}
             </h3>
             <div className="columns is-4 is-multiline">

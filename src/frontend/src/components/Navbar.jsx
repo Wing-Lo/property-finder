@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
     const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
+
+    const navigate = useNavigate();
 
     return (
         <nav
@@ -77,7 +80,12 @@ const Navbar = () => {
                             <a className="button is-primary">
                                 <strong>Sign up</strong>
                             </a>
-                            <a className="button is-secondary">Log in</a>
+                            <a
+                                className="button is-secondary"
+                                onClick={() => navigate("/login")}
+                            >
+                                Log in
+                            </a>
                         </div>
                     </div>
                 </div>

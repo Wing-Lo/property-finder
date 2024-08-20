@@ -77,7 +77,10 @@ const Navbar = () => {
                 <div className="navbar-end">
                     <div className="navbar-item">
                         <div className="buttons">
-                            <a className="button is-primary">
+                            <a
+                                className="button is-primary"
+                                onClick={() => navigate("/register")}
+                            >
                                 <strong>Sign up</strong>
                             </a>
                             <a

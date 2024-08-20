@@ -5,6 +5,7 @@ import RentPage from "./pages/RentPage";
 import AgentPage from "./pages/AgentPage";
 import PropertyInfoPage from "./pages/PropertyInfoPage";
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import {
     Route,
@@ -22,6 +23,7 @@ const App = () => {
                 <Route path="rent" element={<RentPage />} />
                 <Route path="agent" element={<AgentPage />} />
                 <Route path="login" element={<LoginPage />} />
+                <Route path="register" element={<RegisterPage />} />
                 <Route
                     path='/property/:propertyId'
                     element={<PropertyInfoPage />}

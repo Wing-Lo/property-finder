@@ -1,8 +1,15 @@
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
+    const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
+
     return (
-        <nav className="navbar is-white" role="navigation" aria-label="main navigation">
+        <nav
+            className="navbar is-white"
+            role="navigation"
+            aria-label="main navigation"
+        >
             <div className="navbar-brand">
                 <a className="navbar-item">
                     <svg
@@ -34,6 +41,7 @@ const Navbar = () => {
                     aria-label="menu"
                     aria-expanded="false"
                     data-target="navbarBasicExample"
+                    onClick={() => setIsMobileMenuOpened(!isMobileMenuOpened)}
                 >
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
@@ -42,12 +50,25 @@ const Navbar = () => {
                 </a>
             </div>
 
-            <div id="navbarBasicExample" className="navbar-menu">
+            <div
+                id="navbarBasicExample"
+                className={
+                    isMobileMenuOpened ? "navbar-menu is-active" : "navbar-menu"
+                }
+            >
                 <div className="navbar-start">
-                    <NavLink to='/' className="navbar-item">HOME</NavLink>
-                    <NavLink to='/buy' className="navbar-item">BUY</NavLink>
-                    <NavLink to='/rent' className="navbar-item">RENT</NavLink>
-                    <NavLink to='/agent' className="navbar-item">AGENT</NavLink>
+                    <NavLink to="/" className="navbar-item">
+                        HOME
+                    </NavLink>
+                    <NavLink to="/buy" className="navbar-item">
+                        BUY
+                    </NavLink>
+                    <NavLink to="/rent" className="navbar-item">
+                        RENT
+                    </NavLink>
+                    <NavLink to="/agent" className="navbar-item">
+                        AGENT
+                    </NavLink>
                 </div>
 
                 <div className="navbar-end">

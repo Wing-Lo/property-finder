@@ -355,3 +355,7 @@ Granular, discrete interactions to complete the tasks above:
 ##### 17/8/2024
 
 ![Trello 20240815](/docs/trello/20240817.png)
+
+##### 19/8/2024
+
+![Trello 20240819](/docs/trello/20240819.png)

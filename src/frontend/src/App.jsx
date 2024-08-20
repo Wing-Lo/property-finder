@@ -1,6 +1,8 @@
 import React from 'react'
 import MainLayout from './layouts/MainLayout';
 import HomePage from './pages/HomePage';
+import BuyPage from './pages/BuyPage';
+import RentPage from './pages/RentPage';
 import NotFoundPage from './pages/NotFoundPage';
 import {
   Route,
@@ -14,6 +16,8 @@ const App = () => {
     createRoutesFromElements(
       <Route path='/' element={<MainLayout />}>
         <Route index element={<HomePage />} />
+        <Route path='buy' element={<BuyPage />} />
+        <Route path='rent' element={<RentPage />} />
         <Route path='*' element={<NotFoundPage />} />
       </Route>
     )

@@ -115,8 +115,8 @@ const FeatureProperties = ({ isHome = false, sellOrRent }) => {
 
     const featurePropertyTitle = sellOrRent
         ? sellOrRent === "sell"
-            ? "Feature Properties For Sale"
-            : "Feature Properties For Rent"
+            ? "Properties For Sale"
+            : "Properties For Rent"
         : "Feature Properties";
 
     return (
@@ -166,7 +166,7 @@ const FeatureProperties = ({ isHome = false, sellOrRent }) => {
                                             href="#"
                                             className="card-footer-item has-text-primary"
                                         >
-                                            View more
+                                            View detail
                                         </a>
                                     </footer>
                                 </div>

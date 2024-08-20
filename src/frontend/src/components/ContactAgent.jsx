@@ -17,7 +17,7 @@ const ContactAgent = () => {
                 </div>
                 <div className="column mt-4">
                     <button
-                        onClick={() => navigate("/agents")}
+                        onClick={() => navigate("/agent")}
                         className="button is-primary mr-2"
                     >
                         View Agents

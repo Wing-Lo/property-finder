@@ -1,14 +1,11 @@
-
-import Footer from "../components/Footer";
 import FeatureProperties from "../components/FeatureProperties";
 
-const HomePage = () => {
+const BuyPage = () => {
     return (
         <>
             <FeatureProperties sellOrRent={"sell"} />
-            <Footer />
         </>
     );
 };
 
-export default HomePage;
+export default BuyPage;

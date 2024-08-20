@@ -1,20 +1,7 @@
-/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 const FeatureProperties = ({ isHome = false, sellOrRent }) => {
     const [allProperties, setAllProperties] = useState();
-
-    const navigate = useNavigate();
-
-    const featurePropertyTitle = () => {
-        if (!sellOrRent) return "Feature Properties";
-
-        const action = sellOrRent === "sell" ? "Sale" : "Rent";
-        const prefix = isHome ? "Feature Properties" : "Properties";
-
-        return `${prefix} For ${action}`;
-    };
 
     useEffect(() => {
         // Fetch properties from an API
@@ -126,10 +113,16 @@ const FeatureProperties = ({ isHome = false, sellOrRent }) => {
         setAllProperties(properties);
     }, []);
 
+    const featurePropertyTitle = sellOrRent
+        ? sellOrRent === "sell"
+            ? "Properties For Sale"
+            : "Properties For Rent"
+        : "Feature Properties";
+
     return (
         <section className="section has-background-white">
             <h3 className="title is-3 has-text-primary has-text-centered">
-                {featurePropertyTitle()}
+                {featurePropertyTitle}
             </h3>
             <div className="columns is-4 is-multiline">
                 {allProperties &&
@@ -170,11 +163,7 @@ const FeatureProperties = ({ isHome = false, sellOrRent }) => {
                                     </div>
                                     <footer className="card-footer">
                                         <a
-                                            onClick={() =>
-                                                navigate(
-                                                    `/property/${property.id}`
-                                                )
-                                            }
+                                            href="#"
                                             className="card-footer-item has-text-primary"
                                         >
                                             View detail

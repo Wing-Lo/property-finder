@@ -108,9 +108,7 @@ const PropertyInfoPage = () => {
     }, []);
 
     const propertyStatusLabel =
-        property?.sellOrRent === "sell"
-            ? "For Sale"
-            : "For Rent";
+        property?.sellOrRent === "sell" ? "For Sale" : "For Rent";
 
     return (
         <section className="section has-background-white">
@@ -129,7 +127,9 @@ const PropertyInfoPage = () => {
                         <h6 className="title is-6 has-text-dark mt-4">
                             {propertyStatusLabel}
                         </h6>
-                        <h6 className="subtitle is-6">{"$" + property.price}</h6>
+                        <h6 className="subtitle is-6">
+                            {"$" + property.price}
+                        </h6>
                         <p>{property.description}</p>
                         <h6 className="title is-6 has-text-dark mt-4">Agent</h6>
                         <h6 className="subtitle is-6 mt-1">

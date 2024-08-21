@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import MyPropertiesPage from "./pages/MyPropertiesPage";
 import MyListingsPage from "./pages/MyListingsPage";
+import NewListingPage from "./pages/NewListingPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import {
     Route,
@@ -28,6 +29,7 @@ const App = () => {
                 <Route path="register" element={<RegisterPage />} />
                 <Route path="my-properties" element={<MyPropertiesPage />} />
                 <Route path="my-listings" element={<MyListingsPage />} />
+                <Route path="new-listing" element={<NewListingPage />} />
                 <Route
                     path="/property/:propertyId"
                     element={<PropertyInfoPage />}

@@ -9,9 +9,21 @@ router.post('/register', userController.registerUser);
 router.post('/login', userController.loginUser);
 
 // Make an agent
-router.post('/makeAgent', userController.makeAgent);
+router.post('/makeAgent/:id', userController.makeAgent);
 
 // Make an admin
-router.post('/makeAdmin', userController.makeAdmin);
+router.post('/makeAdmin/:id', userController.makeAdmin);
+
+// Delete a user
+router.delete('/:id', userController.deleteUser);
+
+// Edit a user
+router.put('/:id', userController.editUser);
 
 module.exports = router;
+
+// Get a single user by ID
+router.get('/:id', userController.getUserById);
+
+// Get all users
+router.get('/', userController.getAllUsers);

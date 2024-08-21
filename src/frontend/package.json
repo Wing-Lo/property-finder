@@ -30,6 +30,3 @@
   }
 },
 
-"scripts": {
-  "start": "node src/backend/config/db.js"
-}

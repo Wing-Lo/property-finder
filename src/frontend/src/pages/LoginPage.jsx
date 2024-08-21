@@ -4,7 +4,7 @@ const LoginPage = () => {
             <div className="hero-body">
                 <div className="container">
                     <div className="columns is-centered">
-                        <div className="column is-5-tablet is-4-desktop is-3-widescreen">
+                        <div className="column is-4">
                             <h4 className="title is-4 has-text-centered">
                                 Sign in
                             </h4>

@@ -227,7 +227,7 @@ const FeatureProperties = ({
             </div>
             {isMyListings && (
                 <button
-                    onClick={() => navigate("/add-new-listing")}
+                    onClick={() => navigate("/new-listing")}
                     className="button is-primary mr-3"
                 >
                     Add New Listing

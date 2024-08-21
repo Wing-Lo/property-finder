@@ -1,17 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const propertyController = require('../controllers/propertyController');
+const { protect, isAgent } = require('../middleware/auth');
+const {
+  createProperty,
+  getAllProperties,
+  updateProperty,
+  deleteProperty
+} = require('../controllers/propertyController');
 
-// Get all properties
-router.get('/', propertyController.getAllProperties);
+// Route to create a property (agents only)
+router.post('/create', protect, isAgent, createProperty);
 
-// Create a property (only agents can do this)
-router.post('/create', auth, agentAuth, propertyController.createProperty);
+// Route to get all properties
+router.get('/', getAllProperties);
 
-// Update a property (agents or admins)
-router.put('/update/:id', auth, agentAuth, adminAuth, propertyController.updateProperty);
+// Route to update a property (agents or admins only)
+router.put('/update/:id', protect, isAgent, updateProperty);
 
-// Delete a property (agents or admins)
-router.delete('/delete/:id', auth, agentAuth, adminAuth, propertyController.deleteProperty);
+// Route to delete a property (agents or admins only)
+router.delete('/delete/:id', protect, isAgent, deleteProperty);
 
 module.exports = router;

@@ -8,7 +8,7 @@ const Hero = ({
     const navigate = useNavigate();
 
     return (
-        <section className="hero is-medium">
+        <section className="hero is-medium is-light">
             <div className="hero-body has-text-centered">
                 <p className="title mb-4">{title}</p>
                 <p className="subtitle">{subtitle}</p>

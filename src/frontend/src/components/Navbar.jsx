@@ -9,7 +9,7 @@ const Navbar = () => {
 
     return (
         <nav
-            className="navbar is-white"
+            className="navbar is-dark"
             role="navigation"
             aria-label="main navigation"
         >
@@ -58,10 +58,10 @@ const Navbar = () => {
 
                 <div className="navbar-end">
                     <div className="navbar-item">
-                        <NavLink to="/myproperties" className="navbar-item">
+                        <NavLink to="/my-properties" className="navbar-item">
                             MY PROPERTIES
                         </NavLink>
-                        <NavLink to="/mylistings" className="navbar-item">
+                        <NavLink to="/my-listings" className="navbar-item">
                             MY LISTINGS
                         </NavLink>
                         <div className="buttons">

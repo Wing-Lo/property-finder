@@ -1,12 +1,17 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const FeatureProperties = ({
     isHome = false,
     sellOrRent,
     isMyProperties = false,
+    isMyListings = false,
 }) => {
     const [allProperties, setAllProperties] = useState();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Fetch properties from an API
@@ -137,6 +142,10 @@ const FeatureProperties = ({
         featurePropertyTitle = "My Saved Properties";
     }
 
+    if (isMyListings === true) {
+        featurePropertyTitle = "My Listings";
+    }
+
     return (
         <section className="section has-background-white">
             <h3 className="title is-3 has-text-primary has-text-centered">
@@ -194,12 +203,36 @@ const FeatureProperties = ({
                                                 Remove
                                             </Link>
                                         )}
+                                        {isMyListings && (
+                                            <>
+                                                <Link
+                                                    to={`/property/${property.id}`}
+                                                    className="card-footer-item has-text-primary"
+                                                >
+                                                    Edit
+                                                </Link>
+                                                <Link
+                                                    to={`/property/${property.id}`}
+                                                    className="card-footer-item has-text-primary"
+                                                >
+                                                    Remove
+                                                </Link>
+                                            </>
+                                        )}
                                     </footer>
                                 </div>
                             </div>
                         );
                     })}
             </div>
+            {isMyListings && (
+                <button
+                    onClick={() => navigate("/add-new-listing")}
+                    className="button is-primary mr-3"
+                >
+                    Add New Listing
+                </button>
+            )}
         </section>
     );
 };

@@ -1,4 +1,27 @@
+import { useState } from "react";
+
 const NewListingPage = () => {
+    const [propertyImage, setPropertyImage] = useState();
+
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
+
+    const handleFileUpload = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await convertToBase64(file);
+        setPropertyImage(base64);
+    };
+
     return (
         <section className="hero is-white">
             <div className="hero-body">
@@ -60,19 +83,33 @@ const NewListingPage = () => {
                                             <input
                                                 className="file-input"
                                                 type="file"
-                                                name="resume"
+                                                name="propertyImage"
+                                                accept=".jpeg, .png, .jpg"
+                                                required
+                                                onChange={(e) =>
+                                                    handleFileUpload(e)
+                                                }
                                             />
                                             <span className="file-cta">
                                                 <span className="file-icon">
-                                                    <i className="fas fa-upload"></i>
+                                                    <i className="fa fa-upload"></i>
                                                 </span>
                                                 <span className="file-label">
-                                                    {" "}
-                                                    Upload Image{" "}
+                                                    Upload Image
                                                 </span>
                                             </span>
                                         </label>
                                     </div>
+                                    {propertyImage && (
+                                        <div className="icon-text">
+                                            <span className="icon has-text-success">
+                                                <i className="fas fa-check"></i>
+                                            </span>
+                                            <span>
+                                                Image Successfully uploaded
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="field">
                                     <button className="button is-primary mt-2">

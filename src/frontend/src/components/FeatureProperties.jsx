@@ -21,7 +21,7 @@ const FeatureProperties = ({
                 title: "Rental Apartments",
                 description:
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/images/placeholders/1280x960.png",
+                image: "https://bulma.io/assets/images/placeholders/1280x960.png",
                 price: 120000,
                 agent: {
                     firstName: "John",
@@ -36,7 +36,7 @@ const FeatureProperties = ({
                 title: "Rental Apartments",
                 description:
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/images/placeholders/1280x960.png",
+                image: "https://bulma.io/assets/images/placeholders/1280x960.png",
                 price: 120000,
                 agent: {
                     firstName: "John",
@@ -51,7 +51,7 @@ const FeatureProperties = ({
                 title: "Rental Apartments",
                 description:
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/images/placeholders/1280x960.png",
+                image: "https://bulma.io/assets/images/placeholders/1280x960.png",
                 price: 120000,
                 agent: {
                     firstName: "John",
@@ -66,7 +66,7 @@ const FeatureProperties = ({
                 title: "Beautiful Apartments",
                 description:
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/images/placeholders/1280x960.png",
+                image: "https://bulma.io/assets/images/placeholders/1280x960.png",
                 price: 120000,
                 agent: {
                     firstName: "John",
@@ -81,7 +81,7 @@ const FeatureProperties = ({
                 title: "Beautiful Apartments",
                 description:
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/images/placeholders/1280x960.png",
+                image: "https://bulma.io/assets/images/placeholders/1280x960.png",
                 price: 120000,
                 agent: {
                     firstName: "John",
@@ -96,7 +96,7 @@ const FeatureProperties = ({
                 title: "Beautiful Apartments",
                 description:
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/images/placeholders/1280x960.png",
+                image: "https://bulma.io/assets/images/placeholders/1280x960.png",
                 price: 120000,
                 agent: {
                     firstName: "John",
@@ -163,7 +163,7 @@ const FeatureProperties = ({
                                     <div className="card-image">
                                         <figure className="image is-4by3">
                                             <img
-                                                src="https://bulma.io/assets/images/placeholders/1280x960.png"
+                                                src={property.image}
                                                 alt="Placeholder image"
                                             />
                                         </figure>

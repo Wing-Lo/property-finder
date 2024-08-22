@@ -1,11 +1,18 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ loggedInUser, setLoggedInUser }) => {
     const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
-
     const navigate = useNavigate();
+
+    const logout = () => {
+        localStorage.removeItem("loggedInUser");
+        sessionStorage.removeItem("loggedInUser");
+        setLoggedInUser("");
+        navigate("/");
+    };
 
     return (
         <nav
@@ -58,24 +65,36 @@ const Navbar = () => {
 
                 <div className="navbar-end">
                     <div className="navbar-item">
-                        <NavLink to="/my-properties" className="navbar-item">
-                            MY PROPERTIES
-                        </NavLink>
-                        <NavLink to="/my-listings" className="navbar-item">
-                            MY LISTINGS
-                        </NavLink>
-                        <div className="buttons">
-                            <a
-                                className="button is-primary"
-                                onClick={() => navigate("/register")}
+                        {loggedInUser?.user?.isAgent && (
+                            <NavLink to="/my-listings" className="navbar-item">
+                                MY LISTINGS
+                            </NavLink>
+                        )}
+                        {loggedInUser && (
+                            <NavLink
+                                to="/my-properties"
+                                className="navbar-item"
                             >
-                                <strong>Sign up</strong>
-                            </a>
+                                MY PROPERTIES
+                            </NavLink>
+                        )}
+
+                        <div className="buttons">
+                            {!loggedInUser && (
+                                <a
+                                    className="button is-primary"
+                                    onClick={() => navigate("/register")}
+                                >
+                                    <strong>Sign up</strong>
+                                </a>
+                            )}
                             <a
                                 className="button is-secondary"
-                                onClick={() => navigate("/login")}
+                                onClick={() =>
+                                    loggedInUser ? logout() : navigate("/login")
+                                }
                             >
-                                Log in
+                                {loggedInUser ? "Log out" : "Login"}
                             </a>
                         </div>
                     </div>

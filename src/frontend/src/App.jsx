@@ -9,6 +9,7 @@ import RegisterPage from "./pages/RegisterPage";
 import MyPropertiesPage from "./pages/MyPropertiesPage";
 import MyListingsPage from "./pages/MyListingsPage";
 import NewListingPage from "./pages/NewListingPage";
+import ManageUserPage from "./pages/ManageUserPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import {
     Route,
@@ -23,8 +24,8 @@ const App = () => {
 
     useEffect(() => {
         setLoggedInUser(
-            sessionStorage.getItem("loggedInUser") ||
-                localStorage.getItem("loggedInUser")
+            JSON.parse(sessionStorage.getItem("loggedInUser")) ||
+                JSON.parse(localStorage.getItem("loggedInUser"))
         );
     }, []);
 
@@ -56,6 +57,7 @@ const App = () => {
                 <Route path="my-properties" element={<MyPropertiesPage />} />
                 <Route path="my-listings" element={<MyListingsPage />} />
                 <Route path="new-listing" element={<NewListingPage />} />
+                <Route path="manage-user" element={<ManageUserPage />} />
                 <Route
                     path="/property/:propertyId"
                     element={<PropertyInfoPage />}

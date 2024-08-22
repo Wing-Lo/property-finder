@@ -70,6 +70,12 @@ const Navbar = ({ loggedInUser, setLoggedInUser }) => {
                                 MY LISTINGS
                             </NavLink>
                         )}
+
+                        {loggedInUser?.user?.isAdmin && (
+                            <NavLink to="/manage-user" className="navbar-item">
+                                MANAGE USER
+                            </NavLink>
+                        )}
                         {loggedInUser && (
                             <NavLink
                                 to="/my-properties"

@@ -1,9 +1,9 @@
-import Agents from "../components/Agents";
+import Users from "../components/Users";
 
 const AgentPage = () => {
     return (
         <>
-            <Agents />
+            <Users isAgentPage={true} />
         </>
     );
 };

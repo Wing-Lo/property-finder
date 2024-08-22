@@ -4,10 +4,13 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-const MainLayout = () => {
+const MainLayout = ({ loggedInUser, setLoggedInUser }) => {
     return (
         <>
-            <Navbar />
+            <Navbar
+                loggedInUser={loggedInUser}
+                setLoggedInUser={setLoggedInUser}
+            />
             <Outlet />
             <ToastContainer />
             <Footer />

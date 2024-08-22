@@ -1,7 +1,17 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const FeatureProperties = ({ isHome = false, sellOrRent }) => {
+const FeatureProperties = ({
+    isHome = false,
+    sellOrRent,
+    isMyProperties = false,
+    isMyListings = false,
+}) => {
     const [allProperties, setAllProperties] = useState();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Fetch properties from an API
@@ -11,7 +21,7 @@ const FeatureProperties = ({ isHome = false, sellOrRent }) => {
                 title: "Rental Apartments",
                 description:
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/images/placeholders/1280x960.png",
+                image: "https://bulma.io/assets/images/placeholders/1280x960.png",
                 price: 120000,
                 agent: {
                     firstName: "John",
@@ -26,7 +36,7 @@ const FeatureProperties = ({ isHome = false, sellOrRent }) => {
                 title: "Rental Apartments",
                 description:
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/images/placeholders/1280x960.png",
+                image: "https://bulma.io/assets/images/placeholders/1280x960.png",
                 price: 120000,
                 agent: {
                     firstName: "John",
@@ -41,7 +51,7 @@ const FeatureProperties = ({ isHome = false, sellOrRent }) => {
                 title: "Rental Apartments",
                 description:
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/images/placeholders/1280x960.png",
+                image: "https://bulma.io/assets/images/placeholders/1280x960.png",
                 price: 120000,
                 agent: {
                     firstName: "John",
@@ -56,7 +66,7 @@ const FeatureProperties = ({ isHome = false, sellOrRent }) => {
                 title: "Beautiful Apartments",
                 description:
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/images/placeholders/1280x960.png",
+                image: "https://bulma.io/assets/images/placeholders/1280x960.png",
                 price: 120000,
                 agent: {
                     firstName: "John",
@@ -71,7 +81,7 @@ const FeatureProperties = ({ isHome = false, sellOrRent }) => {
                 title: "Beautiful Apartments",
                 description:
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/images/placeholders/1280x960.png",
+                image: "https://bulma.io/assets/images/placeholders/1280x960.png",
                 price: 120000,
                 agent: {
                     firstName: "John",
@@ -86,7 +96,7 @@ const FeatureProperties = ({ isHome = false, sellOrRent }) => {
                 title: "Beautiful Apartments",
                 description:
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/images/placeholders/1280x960.png",
+                image: "https://bulma.io/assets/images/placeholders/1280x960.png",
                 price: 120000,
                 agent: {
                     firstName: "John",
@@ -113,11 +123,28 @@ const FeatureProperties = ({ isHome = false, sellOrRent }) => {
         setAllProperties(properties);
     }, []);
 
-    const featurePropertyTitle = sellOrRent
-        ? sellOrRent === "sell"
-            ? "Properties For Sale"
-            : "Properties For Rent"
-        : "Feature Properties";
+    // const featurePropertyTitle = sellOrRent
+    //     ? sellOrRent === "sell"
+    //         ? "Properties For Sale"
+    //         : "Properties For Rent"
+    //     : "My Saved Properties";
+
+    let featurePropertyTitle;
+    if (sellOrRent === "sell") {
+        featurePropertyTitle = "Featured Properties For Sale";
+    }
+
+    if (sellOrRent === "rent") {
+        featurePropertyTitle = "Featured Properties For Rent";
+    }
+
+    if (isMyProperties === true) {
+        featurePropertyTitle = "My Saved Properties";
+    }
+
+    if (isMyListings === true) {
+        featurePropertyTitle = "My Listings";
+    }
 
     return (
         <section className="section has-background-white">
@@ -136,7 +163,7 @@ const FeatureProperties = ({ isHome = false, sellOrRent }) => {
                                     <div className="card-image">
                                         <figure className="image is-4by3">
                                             <img
-                                                src="https://bulma.io/assets/images/placeholders/1280x960.png"
+                                                src={property.image}
                                                 alt="Placeholder image"
                                             />
                                         </figure>
@@ -162,18 +189,50 @@ const FeatureProperties = ({ isHome = false, sellOrRent }) => {
                                         </div>
                                     </div>
                                     <footer className="card-footer">
-                                        <a
-                                            href="#"
+                                        <Link
+                                            to={`/property/${property.id}`}
                                             className="card-footer-item has-text-primary"
                                         >
-                                            View detail
-                                        </a>
+                                            View More
+                                        </Link>
+                                        {isMyProperties && (
+                                            <Link
+                                                to={`/property/${property.id}`}
+                                                className="card-footer-item has-text-primary"
+                                            >
+                                                Remove
+                                            </Link>
+                                        )}
+                                        {isMyListings && (
+                                            <>
+                                                <Link
+                                                    to={`/property/${property.id}`}
+                                                    className="card-footer-item has-text-primary"
+                                                >
+                                                    Edit
+                                                </Link>
+                                                <Link
+                                                    to={`/property/${property.id}`}
+                                                    className="card-footer-item has-text-primary"
+                                                >
+                                                    Remove
+                                                </Link>
+                                            </>
+                                        )}
                                     </footer>
                                 </div>
                             </div>
                         );
                     })}
             </div>
+            {isMyListings && (
+                <button
+                    onClick={() => navigate("/new-listing")}
+                    className="button is-primary mr-3"
+                >
+                    Add New Listing
+                </button>
+            )}
         </section>
     );
 };

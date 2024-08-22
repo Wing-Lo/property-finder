@@ -1,6 +1,6 @@
 const RegisterPage = () => {
     return (
-        <section className="hero is-fullheight">
+        <section className="hero is-dark is-fullheight">
             <div className="hero-body">
                 <div className="container">
                     <h4 className="title is-4">Sign Up</h4>

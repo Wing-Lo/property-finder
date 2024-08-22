@@ -4,9 +4,9 @@ const jwt = require('jsonwebtoken');
 
 // Register a new user
 exports.registerUser = async (req, res) => {
-  try {
-    const { firstName, lastName, email, password, isAgent, mobileNumber } = req.body;
+  const { firstName, lastName, email, password, isAgent, mobileNumber } = req.body;
 
+  try {
     // Check if user already exists
     const userExists = await User.findOne({ email });
     if (userExists) {
@@ -22,7 +22,7 @@ exports.registerUser = async (req, res) => {
       lastName,
       email,
       password: hashedPassword,
-      isAgent,
+      isAgent: isAgent || false, // Default to false if not provided
       mobileNumber
     });
 
@@ -106,6 +106,71 @@ exports.makeAdmin = async (req, res) => {
     await user.save();
 
     res.status(200).json({ message: 'User is now an admin', user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Delete a user
+exports.deleteUser = async (req, res) => {
+  try {
+    // Find the user by ID
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Edit a user
+exports.editUser = async (req, res) => {
+  const { firstName, lastName, email, password, isAgent, isAdmin, mobileNumber } = req.body;
+
+  try {
+    // Find the user by ID
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update user fields
+    if (firstName !== undefined) user.firstName = firstName;
+    if (lastName !== undefined) user.lastName = lastName;
+    if (email !== undefined) user.email = email;
+    if (password) user.password = await bcrypt.hash(password, 10);
+    if (isAgent !== undefined) user.isAgent = isAgent;
+    if (isAdmin !== undefined) user.isAdmin = isAdmin;
+    if (mobileNumber !== undefined) user.mobileNumber = mobileNumber;
+
+    // Save the updated user
+    await user.save();
+
+    res.status(200).json({ message: 'User updated successfully', user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Get a single user by ID
+exports.getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Get all users
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

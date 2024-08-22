@@ -115,15 +115,32 @@ const RegisterPage = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="field is-grouped">
-                                <div className="control">
-                                    <button
-                                        className="button is-primary mt-4"
-                                        type="submit"
-                                    >
-                                        Register
-                                    </button>
-                                </div>
+                            <div>
+                                <label className="file-label">
+                                    <input
+                                        className="file-input"
+                                        type="file"
+                                        name="propertyImage"
+                                        accept=".jpeg, .png, .jpg"
+                                        required
+                                    />
+                                    <span className="file-cta mt-2">
+                                        <span className="file-icon">
+                                            <i className="fa fa-upload"></i>
+                                        </span>
+                                        <span className="file-label">
+                                            Upload Image
+                                        </span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div className="control mt-2">
+                                <button
+                                    className="button is-primary mt-4"
+                                    type="submit"
+                                >
+                                    Register
+                                </button>
                             </div>
                         </div>
                     </form>

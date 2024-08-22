@@ -20,6 +20,7 @@ const LoginPage = ({ loggedInUser, setLoggedInUser }) => {
             .then((data) => data.json())
             .then((data) => {
                 setLoggedInUser(data);
+
                 if (isRememberLogin) {
                     localStorage.setItem("loggedInUser", JSON.stringify(data));
                 } else {

@@ -16,7 +16,7 @@ app.use(cors());
 
 // Routes
 app.use("/api/users", userRoutes);
-app.use("/api/properties", propertyRoutes);
+// app.use("/api/properties", propertyRoutes);
 
 // Error handling middleware
 app.use(errorHandler);

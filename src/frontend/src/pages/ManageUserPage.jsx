@@ -1,5 +1,11 @@
+import Users from "../components/Users";
+
 const ManageUserPage = () => {
-    return <div>ManageUserPage</div>;
+    return (
+        <>
+            <Users />
+        </>
+    );
 };
 
 export default ManageUserPage;

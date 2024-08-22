@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const Users = () => {
+const Users = ({ isAgentPage = false }) => {
     const [allUsers, setAllUsers] = useState();
 
     useEffect(() => {
@@ -38,13 +38,26 @@ const Users = () => {
             },
         ];
 
+        if (isAgentPage) {
+            users = users.filter((user) => {
+                return user?.isAgent === true;
+            });
+        }
+
         setAllUsers(users);
     }, []);
+
+    let userTitle;
+    if (isAgentPage) {
+        userTitle = "Our Agents";
+    } else {
+        userTitle = "Manage Users";
+    }
 
     return (
         <section className="section has-background-white">
             <h3 className="title is-3 has-text-primary has-text-centered">
-                Our Agents
+                {userTitle}
             </h3>
             <div className="columns is-4 is-multiline">
                 {allUsers &&
@@ -78,16 +91,38 @@ const Users = () => {
                                         </div>
                                     </div>
                                     <footer className="card-footer">
-                                        <a
-                                            onClick={(e) => {
-                                                window.location.href =
-                                                    "mailto:no-reply@propertyfinder.com";
-                                                e.preventDefault();
-                                            }}
-                                            className="card-footer-item has-text-primary"
-                                        >
-                                            Contact Agent
-                                        </a>
+                                        {isAgentPage && (
+                                            <a
+                                                onClick={(e) => {
+                                                    window.location.href =
+                                                        "mailto:no-reply@propertyfinder.com";
+                                                    e.preventDefault();
+                                                }}
+                                                className="card-footer-item has-text-primary"
+                                            >
+                                                Contact Agent
+                                            </a>
+                                        )}
+                                        {!isAgentPage &&
+                                            (user.isAgent ? (
+                                                <a className="card-footer-item has-text-primary">
+                                                    Remove Agent
+                                                </a>
+                                            ) : (
+                                                <a className="card-footer-item has-text-primary">
+                                                    Make Agent
+                                                </a>
+                                            ))}
+                                        {!isAgentPage && (
+                                            <>
+                                                <a className="card-footer-item has-text-primary">
+                                                    Edit
+                                                </a>
+                                                <a className="card-footer-item has-text-primary">
+                                                    Delete
+                                                </a>
+                                            </>
+                                        )}
                                     </footer>
                                 </div>
                             </div>

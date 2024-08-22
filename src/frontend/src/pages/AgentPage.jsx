@@ -3,7 +3,7 @@ import Users from "../components/Users";
 const AgentPage = () => {
     return (
         <>
-            <Users />
+            <Users isAgentPage={true} />
         </>
     );
 };

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { protect, isAgent } = require("../middleware/auth");
+const { protect, isAgent } = require("../middleware/authMiddleware");
 const {
     createProperty,
     getAllProperties,

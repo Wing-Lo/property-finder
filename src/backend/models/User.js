@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     isAgent: { type: Boolean, default: false },
     isAdmin: { type: Boolean, default: false },
-    profilePic: { type: String, required: true },
+    profilePic: { type: String },
     mobileNumber: { type: String, required: true },
     savedProperties: { type: [String], optional: true },
 });

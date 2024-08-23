@@ -175,3 +175,34 @@ exports.getAllUsers = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+const multer = require('multer');
+
+// Set up multer storage
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/profilePics'); // Directory where profile pictures are stored
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${req.user._id}-${Date.now()}-${file.originalname}`);
+    },
+});
+
+const upload = multer({ storage });
+
+// Profile Picture Upload Handler
+exports.uploadProfilePic = [upload.single('profilePic'), async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.profilePic = `/uploads/profilePics/${req.file.filename}`;
+        await user.save();
+
+        res.status(200).json({ message: 'Profile picture uploaded successfully', profilePic: user.profilePic });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}];

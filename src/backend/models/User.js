@@ -9,9 +9,9 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     isAgent: { type: Boolean, default: false },
     isAdmin: { type: Boolean, default: false },
-    profilePic: { type: String, required: true },
+    profilePic: { type: String },
     mobileNumber: { type: String, required: true },
-    savedProperties: { type: [String] },
+    savedProperties: { type: [String], optional: true },
 });
 
 const User = mongoose.model("User", userSchema);

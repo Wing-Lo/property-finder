@@ -4,8 +4,16 @@ const jwt = require("jsonwebtoken");
 
 // Register a new user
 exports.registerUser = async (req, res) => {
-    const { firstName, lastName, email, password, isAgent, mobileNumber } =
-        req.body;
+    const {
+        firstName,
+        lastName,
+        email,
+        password,
+        isAgent,
+        mobileNumber,
+        profilePic,
+        savedProperties,
+    } = req.body;
 
     try {
         // Check if user already exists
@@ -25,6 +33,7 @@ exports.registerUser = async (req, res) => {
             password: hashedPassword,
             isAgent: isAgent || false, // Default to false if not provided
             mobileNumber,
+            profilePic: profilePic || "",
             savedProperties: savedProperties || [],
         });
 

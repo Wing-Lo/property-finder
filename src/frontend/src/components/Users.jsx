@@ -72,6 +72,43 @@ const Users = ({ isAgentPage = false, loggedInUser }) => {
         }
     };
 
+    const removeAgent = async (userId, loggedInUser) => {
+        const token = loggedInUser?.token;
+        try {
+            const response = await fetch(
+                `http://localhost:4000/api/users/removeAgent/${userId}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({ isAgent: false }),
+                }
+            );
+
+            if (!response.ok) {
+                toast.error("Unable to remove agent, please try again!");
+            } else {
+                // Update state after removing agent
+                setAllUsers(
+                    allUsers.map((user) =>
+                        user._id === userId ? { ...user, isAgent: false } : user
+                    )
+                );
+                toast.success("User successfully removed as an agent!");
+            }
+        } catch (err) {
+            toast.error(err?.message || "Something went wrong!");
+        }
+    };
+
+    const handleRemoveAgent = async (userId, loggedInUser) => {
+        setLoading(true);
+        await removeAgent(userId, loggedInUser);
+        setLoading(false);
+    };
+
     const handleDelete = async (userId, loggedInUser) => {
         setLoading(true);
         await deleteUser(userId, loggedInUser);
@@ -169,7 +206,15 @@ const Users = ({ isAgentPage = false, loggedInUser }) => {
                                 {!isAgentPage && (
                                     <>
                                         {user.isAgent ? (
-                                            <a className="card-footer-item has-text-primary">
+                                            <a
+                                                className="card-footer-item has-text-primary"
+                                                onClick={() =>
+                                                    handleRemoveAgent(
+                                                        user._id,
+                                                        loggedInUser
+                                                    )
+                                                }
+                                            >
                                                 Remove Agent
                                             </a>
                                         ) : (
@@ -185,6 +230,7 @@ const Users = ({ isAgentPage = false, loggedInUser }) => {
                                                 Make Agent
                                             </a>
                                         )}
+
                                         <a className="card-footer-item has-text-primary">
                                             Edit
                                         </a>

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const FeatureProperties = ({
     isHome = false,
@@ -11,125 +12,50 @@ const FeatureProperties = ({
 }) => {
     const [allProperties, setAllProperties] = useState();
 
+    const DEFAULT_PROPERTY_IMAGE =
+        "https://images.crowdspring.com/blog/wp-content/uploads/2017/08/23163415/pexels-binyamin-mellish-106399.jpg";
+
     const navigate = useNavigate();
 
     useEffect(() => {
         // Fetch properties from an API
-        let properties = [
-            {
-                id: 1,
-                title: "Rental Apartments",
-                description:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/assets/images/placeholders/1280x960.png",
-                price: 120000,
-                agent: {
-                    firstName: "John",
-                    lastName: "Smith",
-                },
-                address: "123 Happy Street",
-                suburb: "Brisbane",
-                sellOrRent: "rent",
-            },
-            {
-                id: 2,
-                title: "Rental Apartments",
-                description:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/assets/images/placeholders/1280x960.png",
-                price: 120000,
-                agent: {
-                    firstName: "John",
-                    lastName: "Smith",
-                },
-                address: "123 Happy Street",
-                suburb: "Brisbane",
-                sellOrRent: "rent",
-            },
-            {
-                id: 3,
-                title: "Rental Apartments",
-                description:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/assets/images/placeholders/1280x960.png",
-                price: 120000,
-                agent: {
-                    firstName: "John",
-                    lastName: "Smith",
-                },
-                address: "123 Happy Street",
-                suburb: "Brisbane",
-                sellOrRent: "rent",
-            },
-            {
-                id: 4,
-                title: "Beautiful Apartments",
-                description:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/assets/images/placeholders/1280x960.png",
-                price: 120000,
-                agent: {
-                    firstName: "John",
-                    lastName: "Smith",
-                },
-                address: "123 Happy Street",
-                suburb: "Brisbane",
-                sellOrRent: "sell",
-            },
-            {
-                id: 5,
-                title: "Beautiful Apartments",
-                description:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/assets/images/placeholders/1280x960.png",
-                price: 120000,
-                agent: {
-                    firstName: "John",
-                    lastName: "Smith",
-                },
-                address: "123 Happy Street",
-                suburb: "Brisbane",
-                sellOrRent: "sell",
-            },
-            {
-                id: 6,
-                title: "Beautiful Apartments",
-                description:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/assets/images/placeholders/1280x960.png",
-                price: 120000,
-                agent: {
-                    firstName: "John",
-                    lastName: "Smith",
-                },
-                address: "123 Happy Street",
-                suburb: "Brisbane",
-                sellOrRent: "sell",
-            },
-        ];
+        const fetchProperties = async () => {
+            try {
+                const response = await fetch(
+                    "http://localhost:4000/api/properties"
+                );
 
-        if (sellOrRent) {
-            properties = properties.filter((property) => {
-                return property?.sellOrRent === sellOrRent;
-            });
-        }
+                if (!response.ok) {
+                    throw new Error("Unable to fetch properties!");
+                }
 
-        if (isHome) {
-            properties = properties.filter((property, index) => {
-                return index <= 2;
-            });
-        }
+                const data = await response.json();
 
-        setAllProperties(properties);
+                let properties = data;
+
+                if (sellOrRent) {
+                    properties = properties.filter((property) => {
+                        return property?.sellOrRent === sellOrRent;
+                    });
+                }
+
+                if (isHome) {
+                    properties = properties.filter((property, index) => {
+                        return index <= 2;
+                    });
+                }
+
+                setAllProperties(properties);
+            } catch (err) {
+                toast.error(err.message);
+            }
+        };
+
+        fetchProperties();
     }, []);
 
-    // const featurePropertyTitle = sellOrRent
-    //     ? sellOrRent === "sell"
-    //         ? "Properties For Sale"
-    //         : "Properties For Rent"
-    //     : "My Saved Properties";
-
     let featurePropertyTitle;
+
     if (sellOrRent === "sell") {
         featurePropertyTitle = "Featured Properties For Sale";
     }
@@ -157,13 +83,16 @@ const FeatureProperties = ({
                         return (
                             <div
                                 className="column is-one-third"
-                                key={property.id}
+                                key={property._id}
                             >
                                 <div className="card">
                                     <div className="card-image">
                                         <figure className="image is-4by3">
                                             <img
-                                                src={property.image}
+                                                src={
+                                                    property.images[0] ||
+                                                    DEFAULT_PROPERTY_IMAGE
+                                                }
                                                 alt="Placeholder image"
                                             />
                                         </figure>
@@ -190,14 +119,14 @@ const FeatureProperties = ({
                                     </div>
                                     <footer className="card-footer">
                                         <Link
-                                            to={`/property/${property.id}`}
+                                            to={`/property/${property._id}`}
                                             className="card-footer-item has-text-primary"
                                         >
                                             View More
                                         </Link>
                                         {isMyProperties && (
                                             <Link
-                                                to={`/property/${property.id}`}
+                                                to={`/property/${property._id}`}
                                                 className="card-footer-item has-text-primary"
                                             >
                                                 Remove
@@ -206,13 +135,13 @@ const FeatureProperties = ({
                                         {isMyListings && (
                                             <>
                                                 <Link
-                                                    to={`/property/${property.id}`}
+                                                    to={`/property/${property._id}`}
                                                     className="card-footer-item has-text-primary"
                                                 >
                                                     Edit
                                                 </Link>
                                                 <Link
-                                                    to={`/property/${property.id}`}
+                                                    to={`/property/${property._id}`}
                                                     className="card-footer-item has-text-primary"
                                                 >
                                                     Remove

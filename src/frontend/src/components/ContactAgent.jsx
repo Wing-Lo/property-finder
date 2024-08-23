@@ -5,8 +5,8 @@ const ContactAgent = () => {
 
     return (
         <section className="section is-medium">
-            <div className="columns px-6">
-                <div className="column">
+            <div className="columns ">
+                <div className="column is-offset-1">
                     <h3 className="title is-3 has-text-primary">
                         Looking to sell?
                     </h3>
@@ -15,7 +15,7 @@ const ContactAgent = () => {
                         consultation.
                     </p>
                 </div>
-                <div className="column mt-4">
+                <div className="column">
                     <button
                         onClick={() => navigate("/agent")}
                         className="button is-primary mr-2"

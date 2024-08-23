@@ -6,6 +6,7 @@ const {
     getAllProperties,
     updateProperty,
     deleteProperty,
+    getPropertyById,
 } = require("../controllers/propertyController");
 
 // Route to create a property (agents only)
@@ -13,6 +14,9 @@ router.post("/create", protect, isAgent, createProperty);
 
 // Route to get all properties
 router.get("/", getAllProperties);
+
+// Route to get a single property by ID
+router.get("/:id", getPropertyById);
 
 // Route to update a property (agents or admins only)
 router.put("/update/:id", protect, isAgent, updateProperty);

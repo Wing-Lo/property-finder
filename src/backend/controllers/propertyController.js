@@ -15,7 +15,7 @@ exports.createProperty = async (req, res) => {
         } = req.body;
 
         const property = new Property({
-            title,
+            title: title || "",
             description,
             price,
             address,
@@ -32,6 +32,23 @@ exports.createProperty = async (req, res) => {
         res.status(500).json({
             message: "Server error, failed to create property",
         });
+    }
+};
+
+// Get a single property by ID
+
+exports.getPropertyById = async (req, res) => {
+    try {
+        const property = await Property.findById(req.params.id).populate(
+            "agent",
+            "firstName lastName email"
+        );
+
+        if (!property)
+            return res.status(404).json({ message: "Property not found" });
+        res.status(200).json(property);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 };
 
@@ -61,12 +78,10 @@ exports.updateProperty = async (req, res) => {
 
         // Ensure that only the agent who created the property or an admin can update it
         if (property.agent.toString() !== req.user.id && !req.user.isAdmin) {
-            return res
-                .status(403)
-                .json({
-                    message:
-                        "Access denied, only the agent or admin can update this property",
-                });
+            return res.status(403).json({
+                message:
+                    "Access denied, only the agent or admin can update this property",
+            });
         }
 
         Object.assign(property, req.body);
@@ -90,12 +105,10 @@ exports.deleteProperty = async (req, res) => {
 
         // Ensure that only the agent who created the property or an admin can delete it
         if (property.agent.toString() !== req.user.id && !req.user.isAdmin) {
-            return res
-                .status(403)
-                .json({
-                    message:
-                        "Access denied, only the agent or admin can delete this property",
-                });
+            return res.status(403).json({
+                message:
+                    "Access denied, only the agent or admin can delete this property",
+            });
         }
 
         await property.remove();

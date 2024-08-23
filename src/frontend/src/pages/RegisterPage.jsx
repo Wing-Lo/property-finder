@@ -216,17 +216,6 @@ const RegisterPage = () => {
                                             Upload Image
                                         </span>
                                     </span>
-
-                                    <input
-                                        className="file-input"
-                                        type="file"
-                                        name="propertyImage"
-                                        accept=".jpeg, .png, .jpg"
-                                        required
-                                        onChange={(e) => {
-                                            handleFileUpload(e, setProfilePic);
-                                        }}
-                                    />
                                 </label>
                             </div>
                             {profilePic && (

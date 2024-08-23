@@ -12,6 +12,9 @@ router.post("/login", userController.loginUser);
 // Make an agent
 router.post("/makeAgent/:id", protect, isAdmin, userController.makeAgent);
 
+// Remove agent
+router.post("/removeAgent/:id", protect, isAdmin, userController.removeAgent);
+
 // Make an admin
 router.post("/makeAdmin/:id", protect, isAdmin, userController.makeAdmin);
 

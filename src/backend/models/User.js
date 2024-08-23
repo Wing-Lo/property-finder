@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
     isAdmin: { type: Boolean, default: false },
     profilePic: { type: String, required: true },
     mobileNumber: { type: String, required: true },
+    savedProperties: { type: [String] },
 });
 
 const User = mongoose.model("User", userSchema);

@@ -64,7 +64,10 @@ const App = () => {
                 <Route path="register" element={<RegisterPage />} />
                 <Route path="my-properties" element={<MyPropertiesPage />} />
                 <Route path="my-listings" element={<MyListingsPage />} />
-                <Route path="new-listing" element={<NewListingPage />} />
+                <Route
+                    path="new-listing"
+                    element={<NewListingPage loggedInUser={loggedInUser} />}
+                />
                 <Route
                     path="manage-user"
                     element={<ManageUserPage loggedInUser={loggedInUser} />}

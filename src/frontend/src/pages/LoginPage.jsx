@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const LoginPage = ({ loggedInUser, setLoggedInUser }) => {
     const [email, setEmail] = useState();
@@ -29,8 +30,6 @@ const LoginPage = ({ loggedInUser, setLoggedInUser }) => {
                         JSON.stringify(data)
                     );
                 }
-                setIsLoading(false);
-                navigate("/");
             })
             .catch((err) => {
                 console.error(err);
@@ -43,8 +42,12 @@ const LoginPage = ({ loggedInUser, setLoggedInUser }) => {
 
         try {
             await userLogin({ email: email, password: password });
+
+            setIsLoading(false);
+            toast.success("Successfully logged in");
+            navigate("/");
         } catch (err) {
-            console.error(err);
+            toast.error(err?.errorMessage);
         }
     };
 

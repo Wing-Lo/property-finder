@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { handleFileUpload } from "../utils";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
     const [email, setEmail] = useState();
@@ -30,10 +31,11 @@ const RegisterPage = () => {
         })
             .then(() => {
                 setIsLoading(false);
+                toast.success("Successfully registered!");
                 navigate("/login");
             })
             .catch((error) => {
-                console.error(error);
+                toast.error(error?.errorMessage);
             });
     };
 

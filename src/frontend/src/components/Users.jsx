@@ -1,12 +1,50 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
-const Users = ({ isAgentPage = false }) => {
+const Users = ({ isAgentPage = false, loggedInUser }) => {
     const [allUsers, setAllUsers] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     const DEFAULT_PROFILE_PIC =
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz68b1g8MSxSUqvFtuo44MvagkdFGoG7Z7DQ&s";
+
+    // Delete User function to trigger the API
+    const deleteUser = async (userId, loggedInUser) => {
+        const token = loggedInUser?.token;
+
+        try {
+            const response = await fetch(
+                `http://localhost:4000/api/users/${userId}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (!response.ok) {
+                toast.error("Unable to delete user, please try again!");
+            }
+
+            // Update state after deleting user
+            setAllUsers(allUsers.filter((user) => user._id !== userId));
+        } catch (err) {
+            toast.error(err?.errorMessage);
+        }
+    };
+
+    // Handle Delete function to trigger the deleteUser function as well as other stuff
+    const handleDelete = async (userId, loggedInUser) => {
+        //
+        setLoading(true);
+
+        await deleteUser(userId, loggedInUser);
+
+        setLoading(false);
+    };
 
     useEffect(() => {
         // Fetch users from the API
@@ -27,7 +65,7 @@ const Users = ({ isAgentPage = false }) => {
 
                 setAllUsers(users);
             } catch (err) {
-                setError(err.message);
+                toast.error(err.message);
             } finally {
                 setLoading(false);
             }
@@ -45,10 +83,6 @@ const Users = ({ isAgentPage = false }) => {
 
     if (loading) {
         return <p>Loading...</p>;
-    }
-
-    if (error) {
-        return <p>Error: {error}</p>;
     }
 
     return (
@@ -115,7 +149,15 @@ const Users = ({ isAgentPage = false }) => {
                                         <a className="card-footer-item has-text-primary">
                                             Edit
                                         </a>
-                                        <a className="card-footer-item has-text-primary">
+                                        <a
+                                            className="card-footer-item has-text-primary"
+                                            onClick={() =>
+                                                handleDelete(
+                                                    user._id,
+                                                    loggedInUser
+                                                )
+                                            }
+                                        >
                                             Delete
                                         </a>
                                     </>

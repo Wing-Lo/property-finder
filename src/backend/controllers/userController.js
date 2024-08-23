@@ -79,11 +79,6 @@ exports.loginUser = async (req, res) => {
 // Make an agent
 exports.makeAgent = async (req, res) => {
     try {
-        // Ensure the request is coming from an admin user
-        if (!req.user.isAdmin) {
-            return res.status(403).json({ message: "Access denied" });
-        }
-
         // Find the user by ID
         const user = await User.findById(req.params.id);
         if (!user) {

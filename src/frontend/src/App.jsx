@@ -43,7 +43,15 @@ const App = () => {
                 <Route index element={<HomePage />} />
                 <Route path="buy" element={<BuyPage />} />
                 <Route path="rent" element={<RentPage />} />
-                <Route path="agent" element={<AgentPage />} />
+                <Route
+                    path="agent"
+                    element={
+                        <AgentPage
+                            loggedInUser={loggedInUser}
+                            setLoggedInUser={setLoggedInUser}
+                        />
+                    }
+                />
                 <Route
                     path="login"
                     element={
@@ -57,7 +65,10 @@ const App = () => {
                 <Route path="my-properties" element={<MyPropertiesPage />} />
                 <Route path="my-listings" element={<MyListingsPage />} />
                 <Route path="new-listing" element={<NewListingPage />} />
-                <Route path="manage-user" element={<ManageUserPage />} />
+                <Route
+                    path="manage-user"
+                    element={<ManageUserPage loggedInUser={loggedInUser} />}
+                />
                 <Route
                     path="/property/:propertyId"
                     element={<PropertyInfoPage />}

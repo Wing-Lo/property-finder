@@ -1,114 +1,131 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import MoonLoader from "react-spinners/MoonLoader";
+import { API_URL, DEFAULT_PROPERTY_IMAGE } from "../../config";
 
-const PropertyInfoPage = () => {
+const PropertyInfoPage = ({ loggedInUser, setLoggedInUser }) => {
     const { propertyId } = useParams();
     const [property, setProperty] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [savedProperties, setSavedProperties] = useState([]);
+
+    const override = {
+        display: "block",
+        margin: "0 auto",
+    };
 
     useEffect(() => {
-        // Fetch properties from an API
-        let properties = [
-            {
-                id: 1,
-                title: "Rental Apartments",
-                description:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/images/placeholders/1280x960.png",
-                price: 120000,
-                agent: {
-                    firstName: "John",
-                    lastName: "Smith",
-                },
-                address: "123 Happy Street",
-                suburb: "Brisbane",
-                sellOrRent: "rent",
-            },
-            {
-                id: 2,
-                title: "Rental Apartments",
-                description:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/images/placeholders/1280x960.png",
-                price: 120000,
-                agent: {
-                    firstName: "John",
-                    lastName: "Smith",
-                },
-                address: "123 Happy Street",
-                suburb: "Brisbane",
-                sellOrRent: "rent",
-            },
-            {
-                id: 3,
-                title: "Rental Apartments",
-                description:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/images/placeholders/1280x960.png",
-                price: 120000,
-                agent: {
-                    firstName: "John",
-                    lastName: "Smith",
-                },
-                address: "123 Happy Street",
-                suburb: "Brisbane",
-                sellOrRent: "rent",
-            },
-            {
-                id: 4,
-                title: "Beautiful Apartments",
-                description:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/images/placeholders/1280x960.png",
-                price: 120000,
-                agent: {
-                    firstName: "John",
-                    lastName: "Smith",
-                },
-                address: "123 Happy Street",
-                suburb: "Brisbane",
-                sellOrRent: "sell",
-            },
-            {
-                id: 5,
-                title: "Beautiful Apartments",
-                description:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/images/placeholders/1280x960.png",
-                price: 120000,
-                agent: {
-                    firstName: "John",
-                    lastName: "Smith",
-                },
-                address: "123 Happy Street",
-                suburb: "Brisbane",
-                sellOrRent: "sell",
-            },
-            {
-                id: 6,
-                title: "Beautiful Apartments",
-                description:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.",
-                image: "https://bulma.io/images/placeholders/1280x960.png",
-                price: 120000,
-                agent: {
-                    firstName: "John",
-                    lastName: "Smith",
-                },
-                address: "123 Happy Street",
-                suburb: "Brisbane",
-                sellOrRent: "sell",
-            },
-        ];
+        // Update savedProperties whenever loggedInUser changes
+        if (loggedInUser) {
+            setSavedProperties(loggedInUser.user.savedProperties || []);
+        }
+    }, [loggedInUser]);
 
-        const foundProperty = properties.find(
-            (property) => property.id === parseInt(propertyId)
-        );
+    const handleSaveProperty = async () => {
+        if (!loggedInUser) {
+            toast.error("You must be logged in to save properties!");
+            return;
+        }
 
-        setProperty(foundProperty);
+        try {
+            const response = await fetch(`${API_URL}users/addSavedProperty`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${loggedInUser.token}`,
+                },
+                body: JSON.stringify({ propertyId }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to save property!");
+            }
+
+            const updatedUser = await response.json();
+            setLoggedInUser({
+                user: updatedUser.user,
+                token: loggedInUser.token,
+            });
+
+            setSavedProperties(updatedUser?.user?.savedProperties);
+            toast.success("Property has been saved!");
+        } catch (err) {
+            toast.error(err.message || "Failed to save property!");
+        }
+    };
+
+    const handleRemoveSavedProperty = async () => {
+        if (!loggedInUser) {
+            toast.error("You must be logged in to remove saved properties!");
+            return;
+        }
+
+        try {
+            const response = await fetch(
+                `${API_URL}users/removeSavedProperty`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${loggedInUser.token}`,
+                    },
+                    body: JSON.stringify({ propertyId }),
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to remove saved property!");
+            }
+
+            const updatedUser = await response.json();
+            setLoggedInUser({
+                user: updatedUser.user,
+                token: loggedInUser.token,
+            });
+            setSavedProperties(updatedUser?.user?.savedProperties);
+            toast.success("Saved property has been removed!");
+        } catch (err) {
+            toast.error(err.message || "Failed to remove saved property!");
+        }
+    };
+
+    useEffect(() => {
+        const fetchProperty = async () => {
+            try {
+                const response = await fetch(
+                    `${API_URL}properties/${propertyId}`
+                );
+
+                if (!response.ok) {
+                    throw new Error("Property not found!");
+                }
+
+                setProperty(await response.json());
+            } catch (err) {
+                toast.error(err.message || "Property not found!");
+            }
+        };
+
+        fetchProperty();
+        setIsLoading(false);
     }, []);
 
     const propertyStatusLabel =
         property?.sellOrRent === "sell" ? "For Sale" : "For Rent";
+
+    if (isLoading) {
+        return (
+            <section className="section has-background-white">
+                <MoonLoader
+                    cssOverride={override}
+                    size={150}
+                    aria-label="Loading Property..."
+                />
+            </section>
+        );
+    }
 
     return (
         <section className="section has-background-white">
@@ -117,7 +134,7 @@ const PropertyInfoPage = () => {
             </h3>
             {property ? (
                 <div className="columns mt-4">
-                    <div className="column pt-6 pl-6">
+                    <div className="column pt-6 pl-6 is-two-fifths">
                         <h4 className="title is-4 has-text-dark">
                             {property.address}
                         </h4>
@@ -127,8 +144,9 @@ const PropertyInfoPage = () => {
                         <h6 className="title is-6 has-text-dark mt-4">
                             {propertyStatusLabel}
                         </h6>
-                        <h6 className="subtitle is-6">
-                            {"$" + property.price}
+                        <h6 className="subtitle is-5 mt-4">
+                            {"$" + property.price}{" "}
+                            {property?.sellOrRent === "rent" && " Per Week"}
                         </h6>
                         <p>{property.description}</p>
                         <h6 className="title is-6 has-text-dark mt-4">Agent</h6>
@@ -136,17 +154,34 @@ const PropertyInfoPage = () => {
                             {property.agent.firstName +
                                 " " +
                                 property.agent.lastName +
-                                " 0400 000 000"}
+                                " " +
+                                property.agent.mobileNumber}
                         </h6>
                         <div>
-                            <button className="button is-primary mr-3">
-                                Save Property
-                            </button>
+                            {savedProperties.includes(propertyId) ? (
+                                <button
+                                    className="button is-primary mr-3"
+                                    onClick={() => {
+                                        handleRemoveSavedProperty();
+                                    }}
+                                >
+                                    Unsave Property
+                                </button>
+                            ) : (
+                                <button
+                                    className="button is-primary mr-3"
+                                    onClick={() => {
+                                        handleSaveProperty();
+                                    }}
+                                >
+                                    Save Property
+                                </button>
+                            )}
 
                             <button
                                 onClick={(e) => {
                                     window.location.href =
-                                        "mailto:no-reply@propertyfinder.com";
+                                        "mailto:" + property.agent.email;
                                     e.preventDefault();
                                 }}
                                 className="button is-secondary"
@@ -158,8 +193,10 @@ const PropertyInfoPage = () => {
                     <div className="column">
                         <figure className="image is-4by3">
                             <img
-                                src="https://bulma.io/assets/images/placeholders/1280x960.png"
-                                alt="Placeholder image"
+                                src={
+                                    property.images[0] || DEFAULT_PROPERTY_IMAGE
+                                }
+                                alt="Property Image"
                             />
                         </figure>
                     </div>

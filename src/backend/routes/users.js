@@ -21,8 +21,18 @@ router.post("/makeAdmin/:id", protect, isAdmin, userController.makeAdmin);
 // Delete a user
 router.delete("/:id", protect, isAdmin, userController.deleteUser);
 
+// Add a saved property to the user profile
+router.post("/addSavedProperty", protect, userController.addSavedProperty);
+
+// Remove a saved property from the user profile
+router.post(
+    "/removeSavedProperty",
+    protect,
+    userController.removeSavedProperty
+);
+
 // Edit a user
-router.put("/:id", userController.editUser);
+router.put("/:id", protect, isAdmin, userController.editUser);
 
 module.exports = router;
 

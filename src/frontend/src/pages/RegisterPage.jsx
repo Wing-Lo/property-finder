@@ -2,6 +2,7 @@ import { useState } from "react";
 import { handleFileUpload } from "../utils";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { API_URL } from "../../config";
 
 const RegisterPage = () => {
     const [email, setEmail] = useState();
@@ -15,7 +16,7 @@ const RegisterPage = () => {
     const navigate = useNavigate();
 
     const registerUser = async () => {
-        return await fetch("http://localhost:4000/api/users/register", {
+        return await fetch(API_URL + "users/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

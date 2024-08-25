@@ -1,20 +1,18 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { API_URL, DEFAULT_PROFILE_PIC } from "../../config";
 
 const Users = ({ isAgentPage = false, loggedInUser }) => {
     const [allUsers, setAllUsers] = useState([]);
     const [loading, setLoading] = useState(true);
-
-    const DEFAULT_PROFILE_PIC =
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz68b1g8MSxSUqvFtuo44MvagkdFGoG7Z7DQ&s";
 
     // Make User an Agent function to trigger the API
     const makeAgent = async (userId, loggedInUser) => {
         const token = loggedInUser?.token;
         try {
             const response = await fetch(
-                `http://localhost:4000/api/users/makeAgent/${userId}`,
+                `${API_URL}users/makeAgent/${userId}`,
                 {
                     method: "POST",
                     headers: {
@@ -50,16 +48,13 @@ const Users = ({ isAgentPage = false, loggedInUser }) => {
     const deleteUser = async (userId, loggedInUser) => {
         const token = loggedInUser?.token;
         try {
-            const response = await fetch(
-                `http://localhost:4000/api/users/${userId}`,
-                {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+            const response = await fetch(`${API_URL}users/${userId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
 
             if (!response.ok) {
                 toast.error("Unable to delete user, please try again!");
@@ -76,7 +71,7 @@ const Users = ({ isAgentPage = false, loggedInUser }) => {
         const token = loggedInUser?.token;
         try {
             const response = await fetch(
-                `http://localhost:4000/api/users/removeAgent/${userId}`,
+                `${API_URL}users/removeAgent/${userId}`,
                 {
                     method: "POST",
                     headers: {
@@ -118,9 +113,7 @@ const Users = ({ isAgentPage = false, loggedInUser }) => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await fetch(
-                    "http://localhost:4000/api/users/"
-                );
+                const response = await fetch(API_URL + "users");
                 if (!response.ok) {
                     throw new Error("Failed to fetch users");
                 }
@@ -163,7 +156,7 @@ const Users = ({ isAgentPage = false, loggedInUser }) => {
                     <div className="column is-one-third" key={user._id}>
                         <div className="card">
                             <div className="card-image">
-                                <figure className="image is-4by3">
+                                <figure className="image">
                                     <img
                                         src={
                                             user.profilePic ||

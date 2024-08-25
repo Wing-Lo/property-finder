@@ -3,27 +3,31 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { DEFAULT_PROPERTY_IMAGE, API_URL } from "../../config";
+import MoonLoader from "react-spinners/MoonLoader";
 
 const FeatureProperties = ({
     isHome = false,
     sellOrRent,
     isMyProperties = false,
     isMyListings = false,
+    loggedInUser,
 }) => {
     const [allProperties, setAllProperties] = useState();
-
-    const DEFAULT_PROPERTY_IMAGE =
-        "https://images.crowdspring.com/blog/wp-content/uploads/2017/08/23163415/pexels-binyamin-mellish-106399.jpg";
-
+    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
+    const override = {
+        display: "block",
+        margin: "0 auto",
+    };
 
     useEffect(() => {
+        if (isMyListings && !loggedInUser) return;
+
         // Fetch properties from an API
         const fetchProperties = async () => {
             try {
-                const response = await fetch(
-                    "http://localhost:4000/api/properties"
-                );
+                const response = await fetch(API_URL + "properties");
 
                 if (!response.ok) {
                     throw new Error("Unable to fetch properties!");
@@ -45,14 +49,30 @@ const FeatureProperties = ({
                     });
                 }
 
+                if (isMyListings) {
+                    properties = properties.filter((property) => {
+                        return property?.agent?._id === loggedInUser?.user?._id;
+                    });
+                }
+
+                if (isMyProperties) {
+                    properties = properties.filter((property) => {
+                        console.log(loggedInUser);
+                        return loggedInUser?.user?.savedProperties.includes(
+                            property._id
+                        );
+                    });
+                }
+
                 setAllProperties(properties);
+                setIsLoading(false);
             } catch (err) {
                 toast.error(err.message);
             }
         };
 
         fetchProperties();
-    }, []);
+    }, [loggedInUser]);
 
     let featurePropertyTitle;
 
@@ -70,6 +90,51 @@ const FeatureProperties = ({
 
     if (isMyListings === true) {
         featurePropertyTitle = "My Listings";
+    }
+
+    const deleteProperty = async (propertyId, loggedInUser) => {
+        const token = loggedInUser?.token;
+        try {
+            const response = await fetch(
+                `${API_URL}properties/delete/${propertyId}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (!response.ok) {
+                toast.error("Unable to delete property, please try again!");
+            } else {
+                setAllProperties(
+                    allProperties.filter(
+                        (property) => property._id !== propertyId
+                    )
+                );
+                toast.success("Property successfully deleted!");
+            }
+        } catch (err) {
+            toast.error(err?.message || "Something went wrong!");
+        }
+    };
+
+    const handleDelete = async (propertyId, loggedInUser) => {
+        await deleteProperty(propertyId, loggedInUser);
+    };
+
+    if (isLoading) {
+        return (
+            <section className="section has-background-white">
+                <MoonLoader
+                    cssOverride={override}
+                    size={150}
+                    aria-label="Loading Properties..."
+                />
+            </section>
+        );
     }
 
     return (
@@ -93,7 +158,7 @@ const FeatureProperties = ({
                                                     property.images[0] ||
                                                     DEFAULT_PROPERTY_IMAGE
                                                 }
-                                                alt="Placeholder image"
+                                                alt="Property Image"
                                             />
                                         </figure>
                                     </div>
@@ -140,12 +205,17 @@ const FeatureProperties = ({
                                                 >
                                                     Edit
                                                 </Link>
-                                                <Link
-                                                    to={`/property/${property._id}`}
+                                                <a
                                                     className="card-footer-item has-text-primary"
+                                                    onClick={() => {
+                                                        handleDelete(
+                                                            property._id,
+                                                            loggedInUser
+                                                        );
+                                                    }}
                                                 >
                                                     Remove
-                                                </Link>
+                                                </a>
                                             </>
                                         )}
                                     </footer>

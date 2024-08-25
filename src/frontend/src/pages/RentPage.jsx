@@ -1,4 +1,3 @@
-
 import FeatureProperties from "../components/FeatureProperties";
 
 const RentPage = () => {

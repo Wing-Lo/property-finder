@@ -27,7 +27,7 @@ const App = () => {
             JSON.parse(sessionStorage.getItem("loggedInUser")) ||
                 JSON.parse(localStorage.getItem("loggedInUser"))
         );
-    }, []);
+    }, [setLoggedInUser]);
 
     const router = createBrowserRouter(
         createRoutesFromElements(
@@ -62,8 +62,14 @@ const App = () => {
                     }
                 />
                 <Route path="register" element={<RegisterPage />} />
-                <Route path="my-properties" element={<MyPropertiesPage />} />
-                <Route path="my-listings" element={<MyListingsPage />} />
+                <Route
+                    path="my-properties"
+                    element={<MyPropertiesPage loggedInUser={loggedInUser} />}
+                />
+                <Route
+                    path="my-listings"
+                    element={<MyListingsPage loggedInUser={loggedInUser} />}
+                />
                 <Route
                     path="new-listing"
                     element={<NewListingPage loggedInUser={loggedInUser} />}
@@ -74,7 +80,12 @@ const App = () => {
                 />
                 <Route
                     path="/property/:propertyId"
-                    element={<PropertyInfoPage />}
+                    element={
+                        <PropertyInfoPage
+                            loggedInUser={loggedInUser}
+                            setLoggedInUser={setLoggedInUser}
+                        />
+                    }
                 />
                 <Route path="*" element={<NotFoundPage />} />
             </Route>

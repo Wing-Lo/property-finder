@@ -97,6 +97,60 @@ exports.makeAgent = async (req, res) => {
     }
 };
 
+// Add a saved property to the user profile
+exports.addSavedProperty = async (req, res) => {
+    const { propertyId } = req.body;
+
+    try {
+        // Find the user by ID
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Check if the property is already saved
+        if (!user.savedProperties.includes(propertyId)) {
+            // Add the property ID to the savedProperties array
+            user.savedProperties.push(propertyId);
+            await user.save();
+        }
+
+        res.status(200).json({
+            message: "Property has been added to the user profile",
+            user,
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Remove a saved property from the user profile
+exports.removeSavedProperty = async (req, res) => {
+    const { propertyId } = req.body;
+
+    try {
+        // Find the user by ID
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Update user to be an agent
+        user.savedProperties = user.savedProperties.filter(
+            (property) => property !== propertyId
+        );
+
+        await user.save();
+
+        res.status(200).json({
+            message: "Property has been removed from the user profile",
+            user,
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 // Remove agent
 exports.removeAgent = async (req, res) => {
     try {
@@ -168,6 +222,7 @@ exports.editUser = async (req, res) => {
         isAgent,
         isAdmin,
         mobileNumber,
+        savedProperties,
     } = req.body;
 
     try {
@@ -185,6 +240,8 @@ exports.editUser = async (req, res) => {
         if (isAgent !== undefined) user.isAgent = isAgent;
         if (isAdmin !== undefined) user.isAdmin = isAdmin;
         if (mobileNumber !== undefined) user.mobileNumber = mobileNumber;
+        if (savedProperties !== undefined)
+            user.savedProperties = savedProperties;
 
         // Save the updated user
         await user.save();

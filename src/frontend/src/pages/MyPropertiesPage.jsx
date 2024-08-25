@@ -1,7 +1,9 @@
 import FeatureProperties from "../components/FeatureProperties";
 
-const MyPropertiesPage = () => {
-    return <FeatureProperties isMyProperties={true} />;
+const MyPropertiesPage = ({ loggedInUser }) => {
+    return (
+        <FeatureProperties isMyProperties={true} loggedInUser={loggedInUser} />
+    );
 };
 
 export default MyPropertiesPage;

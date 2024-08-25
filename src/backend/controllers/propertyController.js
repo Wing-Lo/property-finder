@@ -41,7 +41,7 @@ exports.getPropertyById = async (req, res) => {
     try {
         const property = await Property.findById(req.params.id).populate(
             "agent",
-            "firstName lastName email"
+            "firstName lastName email mobileNumber"
         );
 
         if (!property)
@@ -111,7 +111,7 @@ exports.deleteProperty = async (req, res) => {
             });
         }
 
-        await property.remove();
+        await property.deleteOne();
         res.json({ message: "Property deleted successfully" });
     } catch (error) {
         console.error(error.message);

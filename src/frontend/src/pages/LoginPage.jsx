@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { API_URL } from "../../config";
 
 const LoginPage = ({ loggedInUser, setLoggedInUser }) => {
     const [email, setEmail] = useState();
@@ -11,7 +12,7 @@ const LoginPage = ({ loggedInUser, setLoggedInUser }) => {
     const navigate = useNavigate();
 
     const userLogin = async (credentials) => {
-        return await fetch("http://localhost:4000/api/users/login", {
+        return await fetch(API_URL + "users/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

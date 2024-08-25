@@ -3,6 +3,7 @@ import { useState } from "react";
 import { handleFileUpload } from "../utils";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { API_URL } from "../../config";
 
 const NewListingPage = ({ loggedInUser }) => {
     const [propertyImage, setPropertyImage] = useState();
@@ -18,7 +19,7 @@ const NewListingPage = ({ loggedInUser }) => {
     const token = loggedInUser?.token;
 
     const addNewListing = async () => {
-        return await fetch("http://localhost:4000/api/properties/create", {
+        return await fetch(API_URL + "properties/create", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

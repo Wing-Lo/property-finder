@@ -120,3 +120,23 @@ exports.deleteProperty = async (req, res) => {
         });
     }
 };
+
+// Search properties
+exports.searchProperties = async (req, res) => {
+    try {
+        const { price, address, suburb, sellOrRent } = req.query;
+
+        const query = {};
+        if (price) query.price = { $lte: price };
+        if (address) query.address = new RegExp(address, 'i');
+        if (suburb) query.suburb = new RegExp(suburb, 'i');
+        if (sellOrRent) query.sellOrRent = sellOrRent;
+
+        const properties = await Property.find(query);
+
+        res.status(200).json(properties);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ error: error.message });
+    }
+};

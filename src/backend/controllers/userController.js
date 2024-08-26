@@ -4,16 +4,7 @@ const jwt = require("jsonwebtoken");
 
 // Register a new user
 exports.registerUser = async (req, res) => {
-    const {
-        firstName,
-        lastName,
-        email,
-        password,
-        isAgent,
-        mobileNumber,
-        profilePic,
-        savedProperties,
-    } = req.body;
+    const { firstName, lastName, email, password, isAgent, mobileNumber, profilePic, savedProperties } = req.body;
 
     try {
         // Check if user already exists
@@ -34,7 +25,7 @@ exports.registerUser = async (req, res) => {
             isAgent: isAgent || false, // Default to false if not provided
             mobileNumber,
             profilePic: profilePic || "",
-            savedProperties: savedProperties || [],
+            savedProperties: savedProperties || []
         });
 
         // Save user to database
@@ -64,13 +55,9 @@ exports.loginUser = async (req, res) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign(
-            { id: user._id, isAdmin: user.isAdmin },
-            process.env.JWT_SECRET,
-            {
-                expiresIn: "1h",
-            }
-        );
+        const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET, {
+            expiresIn: "1h"
+        });
 
         res.status(200).json({ token, user });
     } catch (error) {
@@ -117,7 +104,7 @@ exports.addSavedProperty = async (req, res) => {
 
         res.status(200).json({
             message: "Property has been added to the user profile",
-            user,
+            user
         });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -136,15 +123,13 @@ exports.removeSavedProperty = async (req, res) => {
         }
 
         // Update user to be an agent
-        user.savedProperties = user.savedProperties.filter(
-            (property) => property !== propertyId
-        );
+        user.savedProperties = user.savedProperties.filter((property) => property !== propertyId);
 
         await user.save();
 
         res.status(200).json({
             message: "Property has been removed from the user profile",
-            user,
+            user
         });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -166,7 +151,7 @@ exports.removeAgent = async (req, res) => {
 
         res.status(200).json({
             message: "User is now no longer an agent",
-            user,
+            user
         });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -214,16 +199,8 @@ exports.deleteUser = async (req, res) => {
 
 // Edit a user
 exports.editUser = async (req, res) => {
-    const {
-        firstName,
-        lastName,
-        email,
-        password,
-        isAgent,
-        isAdmin,
-        mobileNumber,
-        savedProperties,
-    } = req.body;
+    const { firstName, lastName, email, password, isAgent, isAdmin, mobileNumber, savedProperties, profilePic } =
+        req.body;
 
     try {
         // Find the user by ID
@@ -240,8 +217,8 @@ exports.editUser = async (req, res) => {
         if (isAgent !== undefined) user.isAgent = isAgent;
         if (isAdmin !== undefined) user.isAdmin = isAdmin;
         if (mobileNumber !== undefined) user.mobileNumber = mobileNumber;
-        if (savedProperties !== undefined)
-            user.savedProperties = savedProperties;
+        if (profilePic !== undefined) user.profilePic = profilePic;
+        if (savedProperties !== undefined) user.savedProperties = savedProperties;
 
         // Save the updated user
         await user.save();

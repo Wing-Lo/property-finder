@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import MoonLoader from "react-spinners/MoonLoader";
 import { API_URL, DEFAULT_PROPERTY_IMAGE } from "../../config";
+import { formatToAUD } from "../utils";
 
 const PropertyInfoPage = ({ loggedInUser, setLoggedInUser }) => {
     const { propertyId } = useParams();
@@ -13,7 +14,7 @@ const PropertyInfoPage = ({ loggedInUser, setLoggedInUser }) => {
 
     const override = {
         display: "block",
-        margin: "0 auto",
+        margin: "0 auto"
     };
 
     useEffect(() => {
@@ -34,9 +35,9 @@ const PropertyInfoPage = ({ loggedInUser, setLoggedInUser }) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${loggedInUser.token}`,
+                    Authorization: `Bearer ${loggedInUser.token}`
                 },
-                body: JSON.stringify({ propertyId }),
+                body: JSON.stringify({ propertyId })
             });
 
             if (!response.ok) {
@@ -46,7 +47,7 @@ const PropertyInfoPage = ({ loggedInUser, setLoggedInUser }) => {
             const updatedUser = await response.json();
             setLoggedInUser({
                 user: updatedUser.user,
-                token: loggedInUser.token,
+                token: loggedInUser.token
             });
 
             setSavedProperties(updatedUser?.user?.savedProperties);
@@ -63,17 +64,14 @@ const PropertyInfoPage = ({ loggedInUser, setLoggedInUser }) => {
         }
 
         try {
-            const response = await fetch(
-                `${API_URL}users/removeSavedProperty`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${loggedInUser.token}`,
-                    },
-                    body: JSON.stringify({ propertyId }),
-                }
-            );
+            const response = await fetch(`${API_URL}users/removeSavedProperty`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${loggedInUser.token}`
+                },
+                body: JSON.stringify({ propertyId })
+            });
 
             if (!response.ok) {
                 throw new Error("Failed to remove saved property!");
@@ -82,7 +80,7 @@ const PropertyInfoPage = ({ loggedInUser, setLoggedInUser }) => {
             const updatedUser = await response.json();
             setLoggedInUser({
                 user: updatedUser.user,
-                token: loggedInUser.token,
+                token: loggedInUser.token
             });
             setSavedProperties(updatedUser?.user?.savedProperties);
             toast.success("Saved property has been removed!");
@@ -94,9 +92,7 @@ const PropertyInfoPage = ({ loggedInUser, setLoggedInUser }) => {
     useEffect(() => {
         const fetchProperty = async () => {
             try {
-                const response = await fetch(
-                    `${API_URL}properties/${propertyId}`
-                );
+                const response = await fetch(`${API_URL}properties/${propertyId}`);
 
                 if (!response.ok) {
                     throw new Error("Property not found!");
@@ -112,40 +108,27 @@ const PropertyInfoPage = ({ loggedInUser, setLoggedInUser }) => {
         setIsLoading(false);
     }, []);
 
-    const propertyStatusLabel =
-        property?.sellOrRent === "sell" ? "For Sale" : "For Rent";
+    const propertyStatusLabel = property?.sellOrRent === "sell" ? "For Sale" : "For Rent";
 
     if (isLoading) {
         return (
             <section className="section has-background-white">
-                <MoonLoader
-                    cssOverride={override}
-                    size={150}
-                    aria-label="Loading Property..."
-                />
+                <MoonLoader cssOverride={override} size={150} aria-label="Loading Property..." />
             </section>
         );
     }
 
     return (
         <section className="section has-background-white">
-            <h3 className="title is-3 has-text-primary has-text-centered">
-                Property Info
-            </h3>
+            <h3 className="title is-3 has-text-primary has-text-centered">Property Info</h3>
             {property ? (
                 <div className="columns mt-4">
                     <div className="column pt-6 pl-6 is-two-fifths">
-                        <h4 className="title is-4 has-text-dark">
-                            {property.address}
-                        </h4>
-                        <h4 className="subtitle is-4 has-text-grey">
-                            {property.suburb}
-                        </h4>
-                        <h6 className="title is-6 has-text-dark mt-4">
-                            {propertyStatusLabel}
-                        </h6>
+                        <h4 className="title is-4 has-text-dark">{property.address}</h4>
+                        <h4 className="subtitle is-4 has-text-grey">{property.suburb}</h4>
+                        <h6 className="title is-6 has-text-dark mt-4">{propertyStatusLabel}</h6>
                         <h6 className="subtitle is-5 mt-4">
-                            {"$" + property.price}{" "}
+                            {formatToAUD(property.price)}
                             {property?.sellOrRent === "rent" && " Per Week"}
                         </h6>
                         <p>{property.description}</p>
@@ -158,54 +141,44 @@ const PropertyInfoPage = ({ loggedInUser, setLoggedInUser }) => {
                                 property.agent.mobileNumber}
                         </h6>
                         <div>
-                            {savedProperties.includes(propertyId) ? (
-                                <button
-                                    className="button is-primary mr-3"
-                                    onClick={() => {
-                                        handleRemoveSavedProperty();
-                                    }}
-                                >
-                                    Unsave Property
-                                </button>
-                            ) : (
-                                <button
-                                    className="button is-primary mr-3"
-                                    onClick={() => {
-                                        handleSaveProperty();
-                                    }}
-                                >
-                                    Save Property
-                                </button>
-                            )}
+                            {loggedInUser &&
+                                (savedProperties.includes(propertyId) ? (
+                                    <button
+                                        className="button is-primary mr-3"
+                                        onClick={() => {
+                                            handleRemoveSavedProperty();
+                                        }}>
+                                        Unsave Property
+                                    </button>
+                                ) : (
+                                    <button
+                                        className="button is-primary mr-3"
+                                        onClick={() => {
+                                            handleSaveProperty();
+                                        }}>
+                                        Save Property
+                                    </button>
+                                ))}
 
                             <button
                                 onClick={(e) => {
-                                    window.location.href =
-                                        "mailto:" + property.agent.email;
+                                    window.location.href = "mailto:" + property.agent.email;
                                     e.preventDefault();
                                 }}
-                                className="button is-secondary"
-                            >
+                                className="button is-secondary">
                                 Contact Agent
                             </button>
                         </div>
                     </div>
                     <div className="column">
                         <figure className="image is-4by3">
-                            <img
-                                src={
-                                    property.images[0] || DEFAULT_PROPERTY_IMAGE
-                                }
-                                alt="Property Image"
-                            />
+                            <img src={property.images[0] || DEFAULT_PROPERTY_IMAGE} alt="Property Image" />
                         </figure>
                     </div>
                 </div>
             ) : (
                 <div>
-                    <h5 className="title is-5 has-text-dark">
-                        Property is not found.
-                    </h5>
+                    <h5 className="title is-5 has-text-dark">Property is not found.</h5>
                 </div>
             )}
         </section>

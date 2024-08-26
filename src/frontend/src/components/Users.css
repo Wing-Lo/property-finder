@@ -1,0 +1,13 @@
+.profile-pic-container {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Adjust the height as needed */
+    overflow: hidden;
+}
+
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the container */
+    object-position: center; /* Centers the image within the container */
+}

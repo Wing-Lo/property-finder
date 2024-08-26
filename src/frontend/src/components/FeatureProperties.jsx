@@ -5,20 +5,21 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { DEFAULT_PROPERTY_IMAGE, API_URL } from "../../config";
 import MoonLoader from "react-spinners/MoonLoader";
+import { formatToAUD } from "../utils";
 
 const FeatureProperties = ({
     isHome = false,
     sellOrRent,
     isMyProperties = false,
     isMyListings = false,
-    loggedInUser,
+    loggedInUser
 }) => {
     const [allProperties, setAllProperties] = useState();
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
     const override = {
         display: "block",
-        margin: "0 auto",
+        margin: "0 auto"
     };
 
     useEffect(() => {
@@ -57,10 +58,7 @@ const FeatureProperties = ({
 
                 if (isMyProperties) {
                     properties = properties.filter((property) => {
-                        console.log(loggedInUser);
-                        return loggedInUser?.user?.savedProperties.includes(
-                            property._id
-                        );
+                        return loggedInUser?.user?.savedProperties.includes(property._id);
                     });
                 }
 
@@ -95,25 +93,18 @@ const FeatureProperties = ({
     const deleteProperty = async (propertyId, loggedInUser) => {
         const token = loggedInUser?.token;
         try {
-            const response = await fetch(
-                `${API_URL}properties/delete/${propertyId}`,
-                {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
+            const response = await fetch(`${API_URL}properties/delete/${propertyId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
                 }
-            );
+            });
 
             if (!response.ok) {
                 toast.error("Unable to delete property, please try again!");
             } else {
-                setAllProperties(
-                    allProperties.filter(
-                        (property) => property._id !== propertyId
-                    )
-                );
+                setAllProperties(allProperties.filter((property) => property._id !== propertyId));
                 toast.success("Property successfully deleted!");
             }
         } catch (err) {
@@ -128,36 +119,24 @@ const FeatureProperties = ({
     if (isLoading) {
         return (
             <section className="section has-background-white">
-                <MoonLoader
-                    cssOverride={override}
-                    size={150}
-                    aria-label="Loading Properties..."
-                />
+                <MoonLoader cssOverride={override} size={150} aria-label="Loading Properties..." />
             </section>
         );
     }
 
     return (
         <section className="section has-background-white">
-            <h3 className="title is-3 has-text-primary has-text-centered">
-                {featurePropertyTitle}
-            </h3>
+            <h3 className="title is-3 has-text-primary has-text-centered">{featurePropertyTitle}</h3>
             <div className="columns is-4 is-multiline">
                 {allProperties &&
                     allProperties.map((property) => {
                         return (
-                            <div
-                                className="column is-one-third"
-                                key={property._id}
-                            >
+                            <div className="column is-one-third" key={property._id}>
                                 <div className="card">
                                     <div className="card-image">
                                         <figure className="image is-4by3">
                                             <img
-                                                src={
-                                                    property.images[0] ||
-                                                    DEFAULT_PROPERTY_IMAGE
-                                                }
+                                                src={property.images[0] || DEFAULT_PROPERTY_IMAGE}
                                                 alt="Property Image"
                                             />
                                         </figure>
@@ -166,54 +145,41 @@ const FeatureProperties = ({
                                         <div className="media">
                                             <div className="media-content">
                                                 <p className="title is-5 mb-1 has-text-primary">
-                                                    {"$" + property.price}
+                                                    {formatToAUD(property.price)}
+                                                    {property?.sellOrRent === "rent" && " Per Week"}
                                                 </p>
                                                 <p className="subtitle is-6">
-                                                    {property.address +
-                                                        ", " +
-                                                        property.suburb}
+                                                    {property.address + ", " + property.suburb}
                                                 </p>
                                             </div>
                                         </div>
-                                        <div className="content">
-                                            {property.description.substring(
-                                                0,
-                                                50
-                                            ) + " ..."}
-                                        </div>
+                                        <div className="content">{property.description.substring(0, 120) + " ..."}</div>
                                     </div>
                                     <footer className="card-footer">
                                         <Link
                                             to={`/property/${property._id}`}
-                                            className="card-footer-item has-text-primary"
-                                        >
+                                            className="card-footer-item has-text-primary">
                                             View More
                                         </Link>
                                         {isMyProperties && (
                                             <Link
                                                 to={`/property/${property._id}`}
-                                                className="card-footer-item has-text-primary"
-                                            >
+                                                className="card-footer-item has-text-primary">
                                                 Remove
                                             </Link>
                                         )}
                                         {isMyListings && (
                                             <>
                                                 <Link
-                                                    to={`/property/${property._id}`}
-                                                    className="card-footer-item has-text-primary"
-                                                >
+                                                    to={`/edit-listing/${property._id}`}
+                                                    className="card-footer-item has-text-primary">
                                                     Edit
                                                 </Link>
                                                 <a
                                                     className="card-footer-item has-text-primary"
                                                     onClick={() => {
-                                                        handleDelete(
-                                                            property._id,
-                                                            loggedInUser
-                                                        );
-                                                    }}
-                                                >
+                                                        handleDelete(property._id, loggedInUser);
+                                                    }}>
                                                     Remove
                                                 </a>
                                             </>
@@ -225,10 +191,7 @@ const FeatureProperties = ({
                     })}
             </div>
             {isMyListings && (
-                <button
-                    onClick={() => navigate("/new-listing")}
-                    className="button is-primary mr-3"
-                >
+                <button onClick={() => navigate("/new-listing")} className="button is-primary mr-3">
                     Add New Listing
                 </button>
             )}

@@ -5,50 +5,67 @@ import { toast } from "react-toastify";
 import { API_URL } from "../../config";
 
 const LoginPage = ({ loggedInUser, setLoggedInUser }) => {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [isRememberLogin, setIsRememberLogin] = useState();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [isRememberLogin, setIsRememberLogin] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
-    const userLogin = async (credentials) => {
-        return await fetch(API_URL + "users/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(credentials),
-        })
-            .then((data) => data.json())
-            .then((data) => {
-                setLoggedInUser(data);
+    const validateForm = () => {
+        const errors = {};
+        if (!email) errors.email = "Email is required";
+        if (!password) errors.password = "Password is required";
+        return errors;
+    };
 
-                if (isRememberLogin) {
-                    localStorage.setItem("loggedInUser", JSON.stringify(data));
-                } else {
-                    sessionStorage.setItem(
-                        "loggedInUser",
-                        JSON.stringify(data)
-                    );
-                }
-            })
-            .catch((err) => {
-                console.error(err);
+    const userLogin = async (credentials) => {
+        try {
+            const response = await fetch(API_URL + "users/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(credentials)
             });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Login failed");
+            }
+
+            const data = await response.json();
+            setLoggedInUser(data);
+
+            if (isRememberLogin) {
+                localStorage.setItem("loggedInUser", JSON.stringify(data));
+            } else {
+                sessionStorage.setItem("loggedInUser", JSON.stringify(data));
+            }
+        } catch (err) {
+            throw new Error(err.message || "An unexpected error occurred");
+        }
     };
 
     const handleLogin = async (event) => {
-        setIsLoading(true);
         event.preventDefault();
+        setIsLoading(true);
+
+        const validationErrors = validateForm();
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            setIsLoading(false);
+            return;
+        }
 
         try {
-            await userLogin({ email: email, password: password });
-
-            setIsLoading(false);
+            await userLogin({ email, password });
             toast.success("Successfully logged in");
             navigate("/");
         } catch (err) {
-            toast.error(err?.errorMessage);
+            toast.error(err.message);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -58,9 +75,7 @@ const LoginPage = ({ loggedInUser, setLoggedInUser }) => {
                 <div className="container">
                     <div className="columns is-centered">
                         <div className="column is-4">
-                            <h4 className="title is-4 has-text-centered">
-                                Sign in
-                            </h4>
+                            <h4 className="title is-4 has-text-centered">Sign in</h4>
                             <form onSubmit={handleLogin} className="box">
                                 <div className="field">
                                     <label className="label">Email</label>
@@ -68,16 +83,15 @@ const LoginPage = ({ loggedInUser, setLoggedInUser }) => {
                                         <input
                                             type="email"
                                             placeholder="e.g. bobsmith@gmail.com"
-                                            className="input"
-                                            required
-                                            onChange={(event) => {
-                                                setEmail(event.target.value);
-                                            }}
+                                            className={`input ${errors.email ? "is-danger" : ""}`}
+                                            value={email}
+                                            onChange={(event) => setEmail(event.target.value)}
                                         />
                                         <span className="icon is-small is-left">
                                             <i className="fa fa-envelope"></i>
                                         </span>
                                     </div>
+                                    {errors.email && <p className="help is-danger">{errors.email}</p>}
                                 </div>
                                 <div className="field">
                                     <label className="label">Password</label>
@@ -85,48 +99,35 @@ const LoginPage = ({ loggedInUser, setLoggedInUser }) => {
                                         <input
                                             type="password"
                                             placeholder="*******"
-                                            className="input"
-                                            required
-                                            onChange={(event) => {
-                                                setPassword(event.target.value);
-                                            }}
+                                            className={`input ${errors.password ? "is-danger" : ""}`}
+                                            value={password}
+                                            onChange={(event) => setPassword(event.target.value)}
                                         />
                                         <span className="icon is-small is-left">
                                             <i className="fa fa-lock"></i>
                                         </span>
                                     </div>
+                                    {errors.password && <p className="help is-danger">{errors.password}</p>}
                                 </div>
                                 <div className="field">
                                     <label className="checkbox">
                                         <input
                                             type="checkbox"
-                                            onChange={(event) => {
-                                                setIsRememberLogin(
-                                                    event.target.checked
-                                                );
-                                            }}
+                                            checked={isRememberLogin}
+                                            onChange={(event) => setIsRememberLogin(event.target.checked)}
                                         />
-                                        <span className="ml-2">
-                                            Remember me
-                                        </span>
+                                        <span className="ml-2">Remember me</span>
                                     </label>
                                 </div>
                                 <div className="field">
-                                    <button
-                                        type="submit "
-                                        className="button is-primary"
-                                        disabled={isLoading}
-                                    >
-                                        Login
+                                    <button type="submit" className="button is-primary" disabled={isLoading}>
+                                        {isLoading ? "Logging in..." : "Login"}
                                     </button>
                                 </div>
                             </form>
                             <p className="has-text-centered">
                                 Don't have an account?
-                                <a
-                                    href="/register"
-                                    className="has-text-light has-text-weight-semibold"
-                                >
+                                <a href="/register" className="has-text-light has-text-weight-semibold">
                                     {" "}
                                     Sign up
                                 </a>

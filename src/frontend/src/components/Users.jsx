@@ -4,13 +4,18 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { API_URL, DEFAULT_PROFILE_PIC } from "../../config";
-import "./Users.css";
 import { isTokenExpired } from "../utils";
+import MoonLoader from "react-spinners/MoonLoader";
 
 const Users = ({ isAgentPage = false, loggedInUser }) => {
     const [allUsers, setAllUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+
+    const override = {
+        display: "block",
+        margin: "0 auto"
+    };
 
     useEffect(() => {
         if (!isAgentPage) {
@@ -153,7 +158,11 @@ const Users = ({ isAgentPage = false, loggedInUser }) => {
     }
 
     if (loading) {
-        return <p>Loading...</p>;
+        return (
+            <section className="section has-background-white">
+                <MoonLoader cssOverride={override} size={150} aria-label="Loading Property..." />
+            </section>
+        );
     }
 
     return (
@@ -162,9 +171,9 @@ const Users = ({ isAgentPage = false, loggedInUser }) => {
             <div className="columns is-4 is-multiline">
                 {allUsers.map((user) => (
                     <div className="column is-one-third" key={user._id}>
-                        <div className="card">
+                        <div className="card is-4by3">
                             <div className="card-image">
-                                <figure className="image profile-pic-container">
+                                <figure className="image">
                                     <img
                                         src={user.profilePic || DEFAULT_PROFILE_PIC}
                                         alt="User profile"

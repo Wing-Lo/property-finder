@@ -279,13 +279,6 @@ const RegisterOrEditUserPage = ({ isEditUserMode = false, loggedInUser }) => {
                                                 alt="Profile Preview"
                                                 style={{ width: "100px", height: "100px", objectFit: "cover" }}
                                             />
-                                            {!profilePic && existingProfilePic && (
-                                                <img
-                                                    src={existingProfilePic}
-                                                    alt="Existing Profile"
-                                                    style={{ width: "100px", height: "100px", objectFit: "cover" }}
-                                                />
-                                            )}
                                         </>
                                     )}
                                 </div>

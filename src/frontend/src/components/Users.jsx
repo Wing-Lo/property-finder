@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +6,7 @@ import { API_URL, DEFAULT_PROFILE_PIC } from "../../config";
 import { isTokenExpired } from "../utils";
 import MoonLoader from "react-spinners/MoonLoader";
 
-const Users = ({ isAgentPage = false, loggedInUser }) => {
+const Users = ({ isAgentPage = false, loggedInUser, setLoggedInUser }) => {
     const [allUsers, setAllUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
@@ -26,6 +25,7 @@ const Users = ({ isAgentPage = false, loggedInUser }) => {
             if (token) {
                 if (isTokenExpired(token)) {
                     toast.error("Your session has expired. Please log in again.");
+                    setLoggedInUser(null);
                     localStorage.removeItem("loggedInUser");
                     sessionStorage.removeItem("loggedInUser");
                     navigate("/login");

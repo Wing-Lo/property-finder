@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -6,7 +5,7 @@ import { toast } from "react-toastify";
 import { DEFAULT_PROPERTY_IMAGE, API_URL } from "../../config";
 import MoonLoader from "react-spinners/MoonLoader";
 import { formatToAUD } from "../utils";
-import { debounce } from "../utils"; // Import the debounce function
+import { debounce, isTokenExpired } from "../utils";
 
 const FeatureProperties = ({
     isHome = false,
@@ -29,6 +28,26 @@ const FeatureProperties = ({
 
     useEffect(() => {
         if (isMyListings && !loggedInUser) return;
+
+        if (isMyListings || isMyProperties) {
+            if (!loggedInUser) return;
+
+            const token = loggedInUser?.token;
+
+            if (token) {
+                if (isTokenExpired(token)) {
+                    toast.error("Your session has expired. Please log in again.");
+                    setLoggedInUser(null);
+                    localStorage.removeItem("loggedInUser");
+                    sessionStorage.removeItem("loggedInUser");
+                    navigate("/login");
+                    return;
+                }
+            } else {
+                toast.error("Unable to retrieve your session. Please log in again.");
+                navigate("/login");
+            }
+        }
 
         // Fetch properties from an API
         const fetchProperties = async () => {
@@ -87,7 +106,9 @@ const FeatureProperties = ({
             }
 
             if (propertyType !== "all") {
-                filtered = filtered.filter((property) => property.sellOrRent === propertyType);
+                filtered = filtered.filter((property) => {
+                    property.sellOrRent === propertyType;
+                });
             }
 
             if (priceRange !== "all") {
@@ -185,15 +206,17 @@ const FeatureProperties = ({
                                     onChange={handleSearchChange}
                                 />
                             </div>
-                            <div className="control">
-                                <div className="select">
-                                    <select value={propertyType} onChange={handlePropertyTypeChange}>
-                                        <option value="all">All Types</option>
-                                        <option value="sell">For Sale</option>
-                                        <option value="rent">For Rent</option>
-                                    </select>
+                            {(isMyListings || isMyProperties) && (
+                                <div className="control">
+                                    <div className="select">
+                                        <select value={propertyType} onChange={handlePropertyTypeChange}>
+                                            <option value="all">All Types</option>
+                                            <option value="sell">For Sale</option>
+                                            <option value="rent">For Rent</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                             <div className="control">
                                 <div className="select">
                                     <select value={priceRange} onChange={handlePriceRangeChange}>

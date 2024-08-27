@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -15,16 +14,10 @@ const Navbar = ({ loggedInUser, setLoggedInUser }) => {
     };
 
     return (
-        <nav
-            className="navbar is-dark"
-            role="navigation"
-            aria-label="main navigation"
-        >
+        <nav className="navbar is-dark" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
                 <a className="navbar-item" onClick={() => navigate("/")}>
-                    <h4 className="title is-4 has-text-primary pl-4">
-                        PROPERTY FINDER
-                    </h4>
+                    <h4 className="title is-4 has-text-primary pl-4">PROPERTY FINDER</h4>
                 </a>
 
                 <a
@@ -33,8 +26,7 @@ const Navbar = ({ loggedInUser, setLoggedInUser }) => {
                     aria-label="menu"
                     aria-expanded="false"
                     data-target="navbarBasicExample"
-                    onClick={() => setIsMobileMenuOpened(!isMobileMenuOpened)}
-                >
+                    onClick={() => setIsMobileMenuOpened(!isMobileMenuOpened)}>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
@@ -42,12 +34,7 @@ const Navbar = ({ loggedInUser, setLoggedInUser }) => {
                 </a>
             </div>
 
-            <div
-                id="navbarBasicExample"
-                className={
-                    isMobileMenuOpened ? "navbar-menu is-active" : "navbar-menu"
-                }
-            >
+            <div id="navbarBasicExample" className={isMobileMenuOpened ? "navbar-menu is-active" : "navbar-menu"}>
                 <div className="navbar-start">
                     <NavLink to="/" className="navbar-item">
                         HOME
@@ -77,29 +64,20 @@ const Navbar = ({ loggedInUser, setLoggedInUser }) => {
                             </NavLink>
                         )}
                         {loggedInUser && (
-                            <NavLink
-                                to="/my-properties"
-                                className="navbar-item"
-                            >
+                            <NavLink to="/my-properties" className="navbar-item">
                                 MY PROPERTIES
                             </NavLink>
                         )}
 
                         <div className="buttons">
                             {!loggedInUser && (
-                                <a
-                                    className="button is-primary"
-                                    onClick={() => navigate("/register")}
-                                >
+                                <a className="button is-primary" onClick={() => navigate("/register")}>
                                     <strong>Sign up</strong>
                                 </a>
                             )}
                             <a
                                 className="button is-secondary"
-                                onClick={() =>
-                                    loggedInUser ? logout() : navigate("/login")
-                                }
-                            >
+                                onClick={() => (loggedInUser ? logout() : navigate("/login"))}>
                                 {loggedInUser ? "Log out" : "Login"}
                             </a>
                         </div>

@@ -1,9 +1,9 @@
 import Users from "../components/Users";
 
-const ManageUserPage = ({ loggedInUser }) => {
+const ManageUserPage = ({ loggedInUser, setLoggedInUser }) => {
     return (
         <>
-            <Users loggedInUser={loggedInUser} />
+            <Users loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
         </>
     );
 };

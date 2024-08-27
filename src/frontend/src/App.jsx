@@ -33,7 +33,10 @@ const App = () => {
                 <Route path="my-listings" element={<MyListingsPage loggedInUser={loggedInUser} />} />
                 <Route path="new-listing" element={<NewListingPage loggedInUser={loggedInUser} />} />
                 <Route path="edit-listing/:propertyId" element={<NewListingPage loggedInUser={loggedInUser} />} />
-                <Route path="manage-user" element={<ManageUserPage loggedInUser={loggedInUser} />} />
+                <Route
+                    path="manage-user"
+                    element={<ManageUserPage loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />}
+                />
                 <Route
                     path="/property/:propertyId"
                     element={<PropertyInfoPage loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />}
@@ -42,10 +45,7 @@ const App = () => {
                     path="agent"
                     element={<AgentPage loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />}
                 />
-                <Route
-                    path="login"
-                    element={<LoginPage loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />}
-                />
+                <Route path="login" element={<LoginPage setLoggedInUser={setLoggedInUser} />} />
                 <Route path="register" element={<RegisterOrEditUserPage />} />
                 <Route
                     path="register/:userId"

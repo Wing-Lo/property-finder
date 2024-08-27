@@ -1,10 +1,9 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { API_URL } from "../../config";
 
-const LoginPage = ({ loggedInUser, setLoggedInUser }) => {
+const LoginPage = ({ setLoggedInUser }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isRememberLogin, setIsRememberLogin] = useState(false);
@@ -78,9 +77,12 @@ const LoginPage = ({ loggedInUser, setLoggedInUser }) => {
                             <h4 className="title is-4 has-text-centered">Sign in</h4>
                             <form onSubmit={handleLogin} className="box">
                                 <div className="field">
-                                    <label className="label">Email</label>
+                                    <label htmlFor="email" className="label">
+                                        Email
+                                    </label>
                                     <div className="control has-icons-left">
                                         <input
+                                            id="email"
                                             type="email"
                                             placeholder="e.g. bobsmith@gmail.com"
                                             className={`input ${errors.email ? "is-danger" : ""}`}
@@ -94,9 +96,12 @@ const LoginPage = ({ loggedInUser, setLoggedInUser }) => {
                                     {errors.email && <p className="help is-danger">{errors.email}</p>}
                                 </div>
                                 <div className="field">
-                                    <label className="label">Password</label>
+                                    <label htmlFor="password" className="label">
+                                        Password
+                                    </label>
                                     <div className="control has-icons-left">
                                         <input
+                                            id="password"
                                             type="password"
                                             placeholder="*******"
                                             className={`input ${errors.password ? "is-danger" : ""}`}
@@ -126,7 +131,7 @@ const LoginPage = ({ loggedInUser, setLoggedInUser }) => {
                                 </div>
                             </form>
                             <p className="has-text-centered">
-                                Don't have an account?
+                                Don&apos;t have an account?
                                 <a href="/register" className="has-text-light has-text-weight-semibold">
                                     {" "}
                                     Sign up

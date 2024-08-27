@@ -7,10 +7,7 @@ import Footer from "../components/Footer";
 const MainLayout = ({ loggedInUser, setLoggedInUser }) => {
     return (
         <>
-            <Navbar
-                loggedInUser={loggedInUser}
-                setLoggedInUser={setLoggedInUser}
-            />
+            <Navbar loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
             <Outlet />
             <ToastContainer />
             <Footer />

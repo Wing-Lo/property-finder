@@ -7,7 +7,11 @@ const {
     updateProperty,
     deleteProperty,
     getPropertyById,
+    searchProperties, 
 } = require("../controllers/propertyController");
+
+// Route to search properties
+router.get('/search', searchProperties); 
 
 // Route to create a property (agents only)
 router.post("/create", protect, isAgent, createProperty);

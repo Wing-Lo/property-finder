@@ -460,3 +460,7 @@ Granular, discrete interactions to complete the tasks above:
 | **Specific Users** | **Expected Result** | **Response in App (User Comment)** | **Result** |
 | As a user, I want to manage my profile so that my personal information is up to date | User should be able to update personal information, view saved properties and booking history, and edit or delete saved properties | Managing my profile was simple. I could update my personal information, view my saved properties and booking history, and make changes as needed. | Pass |
 | As a user, I want to book a property viewing so that I can visit the property in person | User should be able to book a viewing by selecting a preferred date and time and entering contact details for confirmation | Booking a property viewing was easy. I selected a convenient date and time, entered my contact details, and received a confirmation without any delay. | Pass |
+
+### R9. Formal Testing Framework
+
+Formal testing was conducted on the application using testing libraries. For the front end, the Vitest Testing Library was utilized to test various components. The results are shown below:

@@ -386,7 +386,27 @@ Granular, discrete interactions to complete the tasks above:
 
 ![Trello 20240827](/docs/trello/20240827.png)
 
+##### 28/8/2024
+
+![Trello 20240828](/docs/trello/20240828.png)
+
+##### 29/8/2024
+
+![Trello 20240829](/docs/trello/20240829.png)
+
 ## Part B
+
+### R4. Demonstrate your ability to work in a team through the following techniques
+
+##### Project Management using Kanban and Trello:
+
+We use the Kanban methodology, implemented through Trello boards, to manage our project. Kanban is highly effective for visualizing work, limiting work in progress (WIP), and maximizing efficiency. Each project is divided into cards representing tasks, which are then moved across columns such as "To Do," "In Progress," and "Done." This visual representation allows the team to see at a glance where each task stands, identify bottlenecks, and manage priorities.
+
+##### Task Delegation using Kanban:
+
+Kanban also supports effective task delegation by ensuring tasks are assigned to the right people based on their skills and workload. In our Trello board, each task card is assigned to a specific team member, who is responsible for its completion. This ensures clear ownership and accountability.
+
+Please refer to the [R6. Screenshots of Our Trello Board](#r6-screenshots-of-our-trello-board) for the progress.
 
 ### R8. Evidence of User Testing
 
@@ -395,28 +415,26 @@ Granular, discrete interactions to complete the tasks above:
 | User Story | Expected Result | Response in App (User Comment) | Result |
 |------------|-----------------|--------------------------------|--------|
 | **General Users** | **Expected Result** | **Response in App (User Comment)** | **Result** |
-| As an end user, I want to be able to sign-up/login so that I don’t have to enter my details every time I use the platform | User should be able to sign up for an account and log in successfully, receiving confirmation and access to all user functionalities | I can successfully sign up and log in, receiving a confirmation email and access to all functionalities | Pass |
+| As an end user, I want to be able to sign-up/login so that I don’t have to enter my details every time I use the platform | User should be able to sign up for an account and log in successfully, receiving confirmation and access to all user functionalities | I can successfully sign up and log in, receiving a confirmation and access to all functionalities | Pass |
 | As an end user, I want to be able to browse available properties so that I can easily find ones that interest me | User should be able to view property listings with images, price, and other essential details when logged in | When logged in, I can view property listings with all necessary details including images and prices | Pass |
-| As an end user, I want to be able to search for properties based on criteria like location and price range so that I can find properties that match my preferences | User should be able to filter property listings by location, price range, and property type using the search functionality | I can filter property listings by location, price range, and property type using the search functionality | Pass |
+| As an end user, I want to be able to search for properties based on criteria like description and price range so that I can find properties that match my preferences | User should be able to filter property listings by description, price range, and property type using the search functionality | I can filter property listings by description, price range, and property type using the search functionality | Pass |
 | **Admin Users** | **Expected Result** | **Response in App (User Comment)** | **Result** |
 | As an admin, I want to manage property listings effectively so that the platform always reflects the latest offerings | Admin should have the ability to add, edit, or remove property listings, including images and detailed descriptions | When logged in with admin privileges, I can add, edit, and remove property listings, including images and detailed descriptions | Pass |
 | **Specific Users** | **Expected Result** | **Response in App (User Comment)** | **Result** |
-| As a user, I want to manage my profile so that my personal information is up to date | User should be able to update personal information, view saved properties and booking history, and edit or delete saved properties | I can update my personal information, view saved properties and booking history, and edit or delete saved properties from the profile section | Pass |
-| As a user, I want to book a property viewing so that I can visit the property in person | User should be able to book a viewing by selecting a preferred date and time and entering contact details for confirmation | I can book a viewing by selecting a date and time, entering contact details, and receiving a confirmation | Pass |
+| As a user, I want to view saved properties, and edit or delete saved properties from the my properties section | User should be able to view saved properties, and edit or delete saved properties | I can view saved properties, and edit or delete saved properties from the my properties section | Pass |
 
 #### Development Environment Testing from Sam
 
 | User Story | Expected Result | Response in App (User Comment) | Result |
 |------------|-----------------|--------------------------------|--------|
 | **General Users** | **Expected Result** | **Response in App (User Comment)** | **Result** |
-| As an end user, I want to be able to sign-up/login so that I don’t have to enter my details every time I use the platform | User should be able to sign up for an account and log in successfully, receiving confirmation and access to all user functionalities | The sign-up and login process was smooth. I received a confirmation email and had access to all functionalities without any issues. | Pass |
+| As an end user, I want to be able to sign-up/login so that I don’t have to enter my details every time I use the platform | User should be able to sign up for an account and log in successfully, receiving confirmation and access to all user functionalities | The sign-up and login process was smooth. I received a confirmation and had access to all functionalities without any issues. | Pass |
 | As an end user, I want to be able to browse available properties so that I can easily find ones that interest me | User should be able to view property listings with images, price, and other essential details when logged in | Browsing properties was easy. All listings included images, prices, and detailed descriptions, making it simple to find interesting properties. | Pass |
 | As an end user, I want to be able to search for properties based on criteria like location and price range so that I can find properties that match my preferences | User should be able to filter property listings by location, price range, and property type using the search functionality | The search functionality worked well. I could filter properties by location, price range, and type, and the results matched my preferences. | Pass |
 | **Admin Users** | **Expected Result** | **Response in App (User Comment)** | **Result** |
 | As an admin, I want to manage property listings effectively so that the platform always reflects the latest offerings | Admin should have the ability to add, edit, or remove property listings, including images and detailed descriptions | Managing property listings was straightforward. I could add, edit, and remove listings, including updating images and descriptions, without any problems. | Pass |
 | **Specific Users** | **Expected Result** | **Response in App (User Comment)** | **Result** |
-| As a user, I want to manage my profile so that my personal information is up to date | User should be able to update personal information, view saved properties and booking history, and edit or delete saved properties | Updating my profile was easy. I could change my personal information, view saved properties and booking history, and edit or delete saved properties. | Pass |
-| As a user, I want to book a property viewing so that I can visit the property in person | User should be able to book a viewing by selecting a preferred date and time and entering contact details for confirmation | Booking a viewing was efficient. I selected a date and time, entered my contact details, and received a confirmation without any issues. | Pass |
+| As a user, I want to view saved properties, and edit or delete saved properties from the my properties section | User should be able to view saved properties, and edit or delete saved properties from the my properties section | Updating my profile was easy. I could view saved properties, and edit or delete saved properties. | Pass |
 
 
 #### Production Environment User Testing from Wing
@@ -424,21 +442,20 @@ Granular, discrete interactions to complete the tasks above:
 | User Story | Expected Result | Response in App (User Comment) | Result |
 |------------|-----------------|--------------------------------|--------|
 | **General Users** | **Expected Result** | **Response in App (User Comment)** | **Result** |
-| As an end user, I want to be able to sign-up/login so that I don’t have to enter my details every time I use the platform | User should be able to sign up for an account and log in successfully, receiving confirmation and access to all user functionalities | The sign-up process was quick, and I received a confirmation email immediately. Logging in was straightforward, and I had full access to the platform. | Pass |
+| As an end user, I want to be able to sign-up/login so that I don’t have to enter my details every time I use the platform | User should be able to sign up for an account and log in successfully, receiving confirmation and access to all user functionalities | The sign-up process was quick, and I received a confirmation pop up immediately. Logging in was straightforward, and I had full access to the platform. | Pass |
 | As an end user, I want to be able to browse available properties so that I can easily find ones that interest me | User should be able to view property listings with images, price, and other essential details when logged in | Browsing properties was intuitive. Each listing had clear images, pricing information, and detailed descriptions, making it easy to find properties of interest. | Pass |
 | As an end user, I want to be able to search for properties based on criteria like location and price range so that I can find properties that match my preferences | User should be able to filter property listings by location, price range, and property type using the search functionality | The search filters worked perfectly. I could narrow down the listings by location, price range, and property type, and the results were accurate. | Pass |
 | **Admin Users** | **Expected Result** | **Response in App (User Comment)** | **Result** |
 | As an admin, I want to manage property listings effectively so that the platform always reflects the latest offerings | Admin should have the ability to add, edit, or remove property listings, including images and detailed descriptions | The admin panel was user-friendly. I could easily add new listings, edit existing ones, and remove outdated properties. Updating images and descriptions was seamless. | Pass |
 | **Specific Users** | **Expected Result** | **Response in App (User Comment)** | **Result** |
-| As a user, I want to manage my profile so that my personal information is up to date | User should be able to update personal information, view saved properties and booking history, and edit or delete saved properties | Managing my profile was simple. I updated my personal information, reviewed my saved properties and booking history, and edited or deleted saved properties without any issues. | Pass |
-| As a user, I want to book a property viewing so that I can visit the property in person | User should be able to book a viewing by selecting a preferred date and time and entering contact details for confirmation | Booking a property viewing was hassle-free. I chose a convenient date and time, entered my contact details, and received a confirmation promptly. | Pass |
+| As a user, I want to view saved properties, and edit or delete saved properties | User should be able to  view saved properties, and edit or delete saved properties | Managing my profile was simple. I reviewed my saved properties, and edited or deleted saved properties without any issues. | Pass |
 
 ### Production Environment User Testing from Sam
 
 | User Story | Expected Result | Response in App (User Comment) | Result |
 |------------|-----------------|--------------------------------|--------|
 | **General Users** | **Expected Result** | **Response in App (User Comment)** | **Result** |
-| As an end user, I want to be able to sign-up/login so that I don’t have to enter my details every time I use the platform | User should be able to sign up for an account and log in successfully, receiving confirmation and access to all user functionalities | Signing up was straightforward, and I received a confirmation email right away. Logging in was seamless, and I had immediate access to all features. | Pass |
+| As an end user, I want to be able to sign-up/login so that I don’t have to enter my details every time I use the platform | User should be able to sign up for an account and log in successfully, receiving confirmation and access to all user functionalities | Signing up was straightforward, and I received a confirmation right away. Logging in was seamless, and I had immediate access to all features. | Pass |
 | As an end user, I want to be able to browse available properties so that I can easily find ones that interest me | User should be able to view property listings with images, price, and other essential details when logged in | The property browsing experience was excellent. Listings were detailed with high-quality images, accurate pricing, and comprehensive descriptions. | Pass |
 | As an end user, I want to be able to search for properties based on criteria like location and price range so that I can find properties that match my preferences | User should be able to filter property listings by location, price range, and property type using the search functionality | The search functionality was very effective. I could easily filter properties by location, price range, and type, and the results matched my criteria perfectly. | Pass |
 | **Admin Users** | **Expected Result** | **Response in App (User Comment)** | **Result** |
@@ -464,3 +481,29 @@ Granular, discrete interactions to complete the tasks above:
 ### R9. Formal Testing Framework
 
 Formal testing was conducted on the application using testing libraries. For the front end, the Vitest Testing Library was utilized to test various components. The results are shown below:
+
+**Frontend**
+
+![Frontend Test Cases](/docs/unit-testing/frontend-testing-cases.jpeg)
+
+![Frontend Test Results](/docs/unit-testing/frontend-testing-results.jpeg)
+
+**Backend**
+
+![Frontend Test Cases](/docs/unit-testing/backend-testing-cases.jpeg)
+
+### R10. A link (URL) to your deployed website
+
+Frontend is deployed to production using [Netlify](https://www.netlify.com/)
+[https://propertyfinderpro.netlify.app/](https://propertyfinderpro.netlify.app/)
+
+Backed is deployed to production using [Render](https://render.com/)
+[https://property-finder-api-dpc0.onrender.com/api/](https://property-finder-api-dpc0.onrender.com/api/)
+
+### R11. A link to your GitHub repository (repo)
+
+[https://github.com/Wing-Lo/property-finder](https://github.com/Wing-Lo/property-finder)
+
+### R12. The contents of your README.md as submitted for Full Stack App - Part A
+
+Please refer to the [Full Stack App - Part A](#part-a)

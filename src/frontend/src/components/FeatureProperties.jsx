@@ -107,7 +107,7 @@ const FeatureProperties = ({
 
             if (propertyType !== "all") {
                 filtered = filtered.filter((property) => {
-                    property.sellOrRent === propertyType;
+                    return property.sellOrRent === propertyType;
                 });
             }
 
@@ -120,7 +120,7 @@ const FeatureProperties = ({
             }
 
             setFilteredProperties(filtered);
-        }, 300), // Adjust debounce delay as needed
+        }, 300),
         [allProperties, searchQuery, propertyType, priceRange]
     );
 
